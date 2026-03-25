@@ -1,0 +1,14 @@
+# Compiled Lua
+*.luac
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# luarocks
+luarocks/
