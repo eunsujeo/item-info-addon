@@ -1,7 +1,8 @@
-## Interface: 110100
+## Interface: 120001
 ## Title: ItemInfo
 ## Notes: 현재 스펙 BIS 장비 목록 패널 (마우스 오버 아이템 비교 지원)
 ## Author: mob.bit
+## IconTexture: Interface\Icons\INV_Misc_Gem_Variety2
 ## Version: 2.0.0
 ## SavedVariables: ItemInfoDB
 

@@ -52,10 +52,17 @@ SlashCmdList["ITEMINFO"] = function(msg)
     if cmd == "" or cmd == "bis" then
         ItemInfoPanel.Toggle()
 
+    elseif cmd == "update" then
+        print("|cffffd700[ItemInfo]|r BIS 데이터 정보:")
+        print("  업데이트 날짜: " .. ItemInfoBIS.GetUpdateDate())
+        print("  데이터 출처: " .. ItemInfoBIS.GetSourceDescription())
+        print("  업데이트 방법: 게임 밖에서 make update-bis 실행")
+
     elseif cmd == "help" then
         print("|cffffd700[ItemInfo]|r 명령어:")
-        print("  /ii      - BIS 패널 열기/닫기")
-        print("  /ii help - 도움말")
+        print("  /ii        - BIS 패널 열기/닫기")
+        print("  /ii update - 데이터 정보 확인")
+        print("  /ii help   - 도움말")
 
     else
         print("|cffffd700[ItemInfo]|r 알 수 없는 명령어. /ii help 를 입력하세요.")

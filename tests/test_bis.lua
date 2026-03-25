@@ -37,6 +37,16 @@ describe("ItemInfoBIS", function()
             assert.is_not_nil(bisMap[16]) -- 주무기 슬롯
         end)
 
+        it("로드 후 엔트리가 테이블 형태이다", function()
+            ItemInfoBIS.LoadForCurrentSpec()
+            local bisMap = ItemInfoBIS.GetActiveBIS()
+            local entry = bisMap[1]
+            assert.is_not_nil(entry)
+            assert.are.equal("table", type(entry))
+            assert.are.equal("number", type(entry[1]))
+            assert.are.equal("table", type(entry[2]))
+        end)
+
         it("데이터 없는 스펙은 HasData가 false를 반환한다", function()
             -- 존재하지 않는 스펙 인덱스 99
             _G.GetSpecialization = function() return 99 end
@@ -52,8 +62,11 @@ describe("ItemInfoBIS", function()
     describe("GetSlotStatus", function()
 
         before_each(function()
-            -- 죽기 냉기 BIS 주입: 슬롯 1 = 212438
-            ItemInfoBIS.SetActiveBIS({ [1]=212438, [3]=212440, [16]=212449 })
+            ItemInfoBIS.SetActiveBIS({
+                [1]={212438, {10390}},
+                [3]={212440, {10390}},
+                [16]={212449, {10390}},
+            })
         end)
 
         it("BIS 아이템을 장착하면 'bis'를 반환한다", function()
@@ -64,7 +77,6 @@ describe("ItemInfoBIS", function()
         end)
 
         it("BIS 아이템 ID와 장착 아이템 ID가 일치하면 'bis'를 반환한다", function()
-            -- 목업 아이템 링크를 BIS ID(212438)와 일치하도록 변경
             MockWowApi_SetItem(1, {
                 link="|Hitem:212438:6625:0:0:0:0:0:0:0:0|h[선지자의 투구]|h|r",
                 ilvl=489, quality=4
@@ -87,6 +99,28 @@ describe("ItemInfoBIS", function()
     end)
 
     -- ============================================================
+    describe("GetSlotBISItemLink", function()
+
+        it("보너스 ID를 포함한 아이템 링크를 생성한다", function()
+            ItemInfoBIS.SetActiveBIS({ [1]={212438, {10390, 10878}} })
+            local link = ItemInfoBIS.GetSlotBISItemLink(1)
+            assert.are.equal("item:212438::::::::::::2:10390:10878", link)
+        end)
+
+        it("보너스 ID가 없으면 기본 링크를 생성한다", function()
+            ItemInfoBIS.SetActiveBIS({ [1]={212438, {}} })
+            local link = ItemInfoBIS.GetSlotBISItemLink(1)
+            assert.are.equal("item:212438", link)
+        end)
+
+        it("BIS 데이터가 없는 슬롯은 nil을 반환한다", function()
+            ItemInfoBIS.SetActiveBIS({})
+            assert.is_nil(ItemInfoBIS.GetSlotBISItemLink(1))
+        end)
+
+    end)
+
+    -- ============================================================
     describe("GetSummary", function()
 
         it("BIS 데이터 없으면 0,0,0 반환", function()
@@ -98,20 +132,24 @@ describe("ItemInfoBIS", function()
         end)
 
         it("전체 슬롯 수가 총합과 일치한다", function()
-            ItemInfoBIS.SetActiveBIS({ [1]=212438, [3]=212440, [5]=212442 })
+            ItemInfoBIS.SetActiveBIS({
+                [1]={212438, {10390}},
+                [3]={212440, {10390}},
+                [5]={212442, {10390}},
+            })
             local _, _, total = ItemInfoBIS.GetSummary()
             assert.are.equal(3, total)
         end)
 
         it("BIS 장착 슬롯을 정확히 카운트한다", function()
-            ItemInfoBIS.SetActiveBIS({ [1]=212438, [3]=212440 })
-            -- 슬롯 1: 목업 아이템 ID ≠ 212438 → upgrade
-            -- 슬롯 1을 BIS ID로 교체
+            ItemInfoBIS.SetActiveBIS({
+                [1]={212438, {10390}},
+                [3]={212440, {10390}},
+            })
             MockWowApi_SetItem(1, {
                 link="|Hitem:212438:0:0:0:0:0:0:0:0:0|h[투구]|h|r",
                 ilvl=489, quality=4
             })
-            -- 슬롯 3: 목업 아이템 ID ≠ 212440 → upgrade
             local bisCount, upgradeCount, total = ItemInfoBIS.GetSummary()
             assert.are.equal(1, bisCount)
             assert.are.equal(1, upgradeCount)
@@ -129,7 +167,7 @@ describe("ItemInfoBIS", function()
         end)
 
         it("BIS 맵에 데이터가 있으면 true", function()
-            ItemInfoBIS.SetActiveBIS({ [1]=212438 })
+            ItemInfoBIS.SetActiveBIS({ [1]={212438, {10390}} })
             assert.is_true(ItemInfoBIS.HasData())
         end)
 

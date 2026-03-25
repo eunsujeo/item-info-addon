@@ -1,9 +1,10 @@
 # Makefile — ItemInfo WoW 애드온 빌드 및 검증
 
-WOW_ADDON_DIR ?= /Applications/World\ of\ Warcraft/_retail_/Interface/AddOns/ItemInfo
-ADDON_FILES   = bis_data.lua ItemInfoBIS.lua ItemInfoPanel.lua ItemInfo.lua ItemInfo.toc
+WOW_ADDON_DIR ?= D:/game/World\ of\ Warcraft/_retail_/Interface/AddOns/ItemInfo
+PYTHON        ?= /c/Users/User/AppData/Local/Programs/Python/Python312/python.exe
+ADDON_FILES   = bis_data.lua item_sources.lua ItemInfoBIS.lua ItemInfoPanel.lua ItemInfo.lua ItemInfo.toc
 
-.PHONY: all lint lint-tests lint-all test check install-check install clean help
+.PHONY: all lint lint-tests lint-all test check install-check install clean help update-bis verify
 
 all: lint test
 
@@ -48,10 +49,28 @@ install:
 	@cp $(ADDON_FILES) "$(WOW_ADDON_DIR)/"
 	@echo "    설치 완료: $(WOW_ADDON_DIR)"
 
+# ============================================================
+update-bis:
+	@echo "==> [1/4] murlok.io에서 M+ BIS 데이터 수집..."
+	@$(PYTHON) scripts/update_bis.py --keep-raid
+	@echo "==> [2/4] 획득처 매핑 적용..."
+	@$(PYTHON) scripts/apply_sources.py
+	@echo "==> [3/4] 데이터 검증..."
+	@$(PYTHON) scripts/verify_bis.py
+	@echo "==> [4/4] WoW 애드온 설치..."
+	$(MAKE) install
+	@echo ""
+	@echo "✓ BIS 데이터 업데이트 완료"
+
+verify:
+	@$(PYTHON) scripts/verify_bis.py
+
 help:
 	@echo "make lint       - 소스 정적 분석"
 	@echo "make lint-all   - 소스 + 테스트 정적 분석"
 	@echo "make test       - 단위 테스트 실행"
 	@echo "make check      - 전체 검증 (CI 기준)"
 	@echo "make install    - WoW 애드온 폴더에 설치"
+	@echo "make update-bis - murlok.io에서 M+ BIS 데이터 갱신 + 소스 매핑 + 검증 + 설치"
+	@echo "make verify     - bis_data.lua 데이터 검증만 실행"
 	@echo "                  경로 변경: make install WOW_ADDON_DIR=/your/path"

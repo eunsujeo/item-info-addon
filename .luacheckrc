@@ -17,6 +17,7 @@ globals = {
     "ItemInfo",
     "ItemInfoBIS",
     "ItemInfoBISData",
+    "ItemInfoBISMeta",
     "ItemInfoPanel",
     "ItemInfoDB",
 
@@ -24,7 +25,13 @@ globals = {
     "CreateFrame",
     "UIParent",
     "GameTooltip",
+    "ShoppingTooltip1",
     "BackdropTemplate",
+    "UIDropDownMenu_Initialize",
+    "UIDropDownMenu_CreateInfo",
+    "UIDropDownMenu_AddButton",
+    "UIDropDownMenu_SetWidth",
+    "UIDropDownMenu_SetText",
 
     -- WoW 유닛/스펙 API
     "UnitClass",
@@ -42,6 +49,7 @@ globals = {
     "SLASH_ITEMINFO2",
 
     -- WoW 유틸
+    "_G",
     "ReloadUI",
     "string",
     "math",
