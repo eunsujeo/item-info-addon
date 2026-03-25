@@ -1,0 +1,11 @@
+## Interface: 110100
+## Title: ItemInfo
+## Notes: 현재 스펙 BIS 장비 목록 패널 (마우스 오버 아이템 비교 지원)
+## Author: mob.bit
+## Version: 2.0.0
+## SavedVariables: ItemInfoDB
+
+bis_data.lua
+ItemInfoBIS.lua
+ItemInfoPanel.lua
+ItemInfo.lua
