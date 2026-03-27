@@ -69,7 +69,19 @@ if errorlevel 1 (
     echo     No missing sources. Skipping fetch.
 )
 
-echo --- [7/7] Final verify...
+echo --- [7/9] Resolve enchant IDs...
+"%PYTHON%" scripts\resolve_enchant_ids.py
+if errorlevel 1 (
+    echo [7/9] FAILED (non-critical, continuing)
+)
+
+echo --- [8/9] Resolve embellishment IDs...
+"%PYTHON%" scripts\resolve_embel_ids.py
+if errorlevel 1 (
+    echo [8/9] FAILED (non-critical, continuing)
+)
+
+echo --- [9/9] Final verify...
 "%PYTHON%" scripts\verify_bis.py
 if errorlevel 1 (
     echo FAILED: Add missing items to item_sources.lua manually, then re-run.
@@ -79,6 +91,8 @@ if errorlevel 1 (
 echo --- Installing to WoW...
 if not exist "%WOW_ADDON_DIR%" mkdir "%WOW_ADDON_DIR%"
 copy /y bis_data.lua "%WOW_ADDON_DIR%\" >nul
+copy /y talent_data.lua "%WOW_ADDON_DIR%\" >nul
+copy /y extra_data.lua "%WOW_ADDON_DIR%\" >nul
 copy /y item_sources.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfoBIS.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfoPanel.lua "%WOW_ADDON_DIR%\" >nul

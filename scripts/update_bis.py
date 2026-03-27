@@ -176,20 +176,22 @@ HEADERS = {
 REQUEST_DELAY = 2.0  # 요청 간 딜레이 (초)
 
 
-def fetch_spec_gear(class_slug: str, spec_slug: str, content_type: str = "m+") -> dict:
-    """murlok.io에서 특정 스펙의 장비 데이터를 가져옵니다."""
+def fetch_spec_page(class_slug: str, spec_slug: str, content_type: str = "m+"):
+    """murlok.io에서 특정 스펙의 페이지를 가져와 soup을 반환합니다."""
     url = f"https://murlok.io/{class_slug}/{spec_slug}/{content_type}"
     try:
         resp = requests.get(url, headers=HEADERS, timeout=15)
         resp.raise_for_status()
     except requests.RequestException as e:
         print(f"  ✗ 실패: {url} — {e}", file=sys.stderr)
-        return {}
+        return None
+    return BeautifulSoup(resp.text, "html.parser")
 
-    soup = BeautifulSoup(resp.text, "html.parser")
+
+def parse_gear(soup) -> dict:
+    """soup에서 gear 섹션을 파싱합니다."""
     gear_section = soup.find("section", id="gear")
     if not gear_section:
-        print(f"  ✗ gear 섹션 없음: {url}", file=sys.stderr)
         return {}
 
     slots = {}
@@ -201,10 +203,8 @@ def fetch_spec_gear(class_slug: str, spec_slug: str, content_type: str = "m+") -
             continue
         slot_name = h3.get_text(strip=True)
 
-        # 슬롯 매핑
         slot_id = SLOT_MAP.get(slot_name)
         if slot_id is None:
-            # "Ring", "Trinket" 등 복수 슬롯 처리
             for key, sid in SLOT_MAP.items():
                 if key.lower() in slot_name.lower():
                     slot_id = sid
@@ -212,18 +212,16 @@ def fetch_spec_gear(class_slug: str, spec_slug: str, content_type: str = "m+") -
         if slot_id is None:
             continue
 
-        # 아이템 링크 추출 (첫 번째 = 1순위)
         links = box.find_all("a", href=re.compile(r"wowhead\.com/item=\d+"))
         if not links:
             continue
 
-        # Ring/Trinket 슬롯은 2개씩 추출
         if slot_name.lower() in ("ring", "rings", "trinket", "trinkets"):
             for i, link in enumerate(links[:2]):
                 match = re.search(r"item=(\d+)", link["href"])
                 if match:
                     item_id = int(match.group(1))
-                    sid = slot_id + i  # 11→12, 13→14
+                    sid = slot_id + i
                     if sid not in slots:
                         slots[sid] = item_id
         else:
@@ -234,6 +232,156 @@ def fetch_spec_gear(class_slug: str, spec_slug: str, content_type: str = "m+") -
                     slots[slot_id] = item_id
 
     return slots
+
+
+def _parse_name_count(raw_name: str) -> tuple:
+    """아이템 이름과 사용 인원수를 분리합니다. 예: 'Hunt30' → ('Hunt', 30)"""
+    m = re.match(r'^(.*?)(\d+)$', raw_name.strip())
+    if m:
+        return m.group(1).strip(), int(m.group(2))
+    return raw_name.strip(), 0
+
+
+def _clean_item_name(raw_name: str) -> str:
+    """아이템 이름 끝의 사용 횟수 숫자를 제거합니다. 예: 'Hunt30' → 'Hunt'"""
+    return _parse_name_count(raw_name)[0]
+
+
+def parse_section_items(soup, section_id: str) -> list:
+    """soup에서 특정 섹션의 아이템 목록을 파싱합니다.
+    Returns: [{name, id, type, slot}, ...]
+    """
+    section = soup.find("section", id=section_id)
+    if not section:
+        return []
+
+    items = []
+    boxes = section.find_all("div", class_=lambda c: c and "vi-box-with-header" in c)
+
+    for box in boxes:
+        h3 = box.find("h3")
+        slot_name = h3.get_text(strip=True) if h3 else ""
+
+        links = box.find_all("a", href=re.compile(r"wowhead\.com/(item|spell)=\d+"))
+        for link in links:
+            raw_name = link.get_text(strip=True)
+            name, count = _parse_name_count(raw_name)
+            if not name:
+                continue
+            href = link.get("href", "")
+            id_match = re.search(r"(item|spell)=(\d+)", href)
+            entry_id = int(id_match.group(2)) if id_match else 0
+            entry_type = id_match.group(1) if id_match else "item"
+            items.append({
+                "name": name,
+                "id": entry_id,
+                "type": entry_type,
+                "slot": slot_name,
+                "count": count,
+            })
+            break  # 각 박스에서 1순위만
+
+    # 박스가 없으면 링크 직접 추출 (장식 등)
+    if not items and section:
+        links = section.find_all("a", href=re.compile(r"wowhead\.com/(item|spell)=\d+"))
+        for link in links:
+            raw_name = link.get_text(strip=True)
+            name, count = _parse_name_count(raw_name)
+            if not name:
+                continue
+            href = link.get("href", "")
+            id_match = re.search(r"(item|spell)=(\d+)", href)
+            entry_id = int(id_match.group(2)) if id_match else 0
+            entry_type = id_match.group(1) if id_match else "item"
+            if entry_id > 0:
+                items.append({
+                    "name": name,
+                    "id": entry_id,
+                    "type": entry_type,
+                    "slot": "",
+                    "count": count,
+                })
+
+    return items
+
+
+def parse_stat_priority(soup) -> list:
+    """soup에서 스탯 우선순위를 파싱합니다.
+    "Stat priority" 텍스트 뒤에 나오는 스탯 이름 순서를 추출합니다.
+    Returns: ["가속", "특화", "치명타", "유연성"]
+    """
+    section = soup.find("section", id="stat-priority")
+    if not section:
+        return []
+
+    STAT_NAMES = {
+        "haste": "가속",
+        "mastery": "특화",
+        "critical strike": "치명타",
+        "versatility": "유연성",
+    }
+
+    # 섹션 텍스트를 줄 단위로 분리
+    texts = [t.strip() for t in section.get_text(separator="\n").split("\n") if t.strip()]
+
+    # "Stat priority" 텍스트를 찾되, 첫 번째는 섹션 제목이므로 두 번째부터 수집
+    stats = []
+    priority_count = 0
+    collecting = False
+    for text in texts:
+        if text.lower() == "stat priority":
+            priority_count += 1
+            if priority_count == 2:  # 두 번째 "Stat priority"가 실제 순서
+                collecting = True
+                continue
+            elif priority_count >= 3:  # 세 번째는 Minor Stats → 중단
+                break
+            continue
+        if collecting:
+            lower = text.lower()
+            matched = False
+            for en, ko in STAT_NAMES.items():
+                if en == lower and ko not in stats:
+                    stats.append(ko)
+                    matched = True
+                    break
+            if not matched and stats:
+                break  # 스탯이 아닌 텍스트가 나오면 수집 종료
+
+    return stats
+
+
+def parse_top_player(soup) -> str | None:
+    """soup에서 1위 플레이어 캐릭터 URL을 추출합니다."""
+    matches = re.findall(r'/character/(\w+)/([^/]+)/([^/]+)/pve', str(soup))
+    if matches:
+        region, realm, name = matches[0]
+        return f"{region}/{realm}/{name}"
+    return None
+
+
+def fetch_spec_gear(class_slug: str, spec_slug: str, content_type: str = "m+") -> dict:
+    """murlok.io에서 특정 스펙의 장비 데이터를 가져옵니다. (하위 호환)"""
+    soup = fetch_spec_page(class_slug, spec_slug, content_type)
+    if not soup:
+        return {}
+    return parse_gear(soup)
+
+
+def fetch_spec_all(class_slug: str, spec_slug: str, content_type: str = "m+") -> dict:
+    """murlok.io에서 특정 스펙의 장비 + 스탯/장식/마법부여/보석을 가져옵니다."""
+    soup = fetch_spec_page(class_slug, spec_slug, content_type)
+    if not soup:
+        return {}
+
+    return {
+        "gear": parse_gear(soup),
+        "stats": parse_stat_priority(soup),
+        "embellishments": parse_section_items(soup, "embellishments"),
+        "enchantments": parse_section_items(soup, "enchantments"),
+        "gems": parse_section_items(soup, "gems"),
+        "top_player": parse_top_player(soup),
+    }
 
 
 def parse_new_format_raid_data(content: str) -> dict:
@@ -507,6 +655,78 @@ def print_diff(diff_result: dict):
           f"(총 {total}개)")
 
 
+def generate_extra_lua(extra_data: dict, output_path: Path):
+    """extra_data.lua (스탯/장식/마법부여/보석) 파일을 생성합니다."""
+    today = datetime.now().strftime("%Y-%m-%d")
+    lines = [
+        "-- extra_data.lua",
+        f"-- 스탯 우선순위 / 장식 / 마법부여 / 보석 (murlok.io 상위 50명 기준)",
+        f"-- 업데이트: {today}",
+        "",
+        "ItemInfoExtraData = {}",
+        "",
+    ]
+
+    for class_id, class_info in CLASS_SPECS.items():
+        if class_id not in extra_data:
+            continue
+        specs = extra_data[class_id]
+        if not specs:
+            continue
+
+        lines.append(f'ItemInfoExtraData["{class_id}"] = {{')
+
+        for spec in class_info["specs"]:
+            si = spec["index"]
+            if si not in specs:
+                continue
+
+            data = specs[si]
+            lines.append(f'    [{si}] = {{ -- {spec["name"]}')
+
+            # 스탯 우선순위
+            stats = data.get("stats", [])
+            stats_str = ", ".join(f'"{s}"' for s in stats)
+            lines.append(f'        stats = {{{stats_str}}},')
+
+            # 장식
+            embel = data.get("embellishments", [])
+            lines.append(f'        embellishments = {{')
+            for item in embel[:2]:
+                c = item.get("count", 0)
+                lines.append(f'            {{name="{item["name"]}", id={item["id"]}, count={c}}},')
+            lines.append(f'        }},')
+
+            # 마법부여
+            ench = data.get("enchantments", [])
+            lines.append(f'        enchantments = {{')
+            for item in ench[:10]:
+                slot = item.get("slot", "")
+                c = item.get("count", 0)
+                lines.append(f'            {{slot="{slot}", name="{item["name"]}", id={item["id"]}, count={c}}},')
+            lines.append(f'        }},')
+
+            # 보석
+            gems = data.get("gems", [])
+            lines.append(f'        gems = {{')
+            for item in gems[:4]:
+                c = item.get("count", 0)
+                lines.append(f'            {{name="{item["name"]}", id={item["id"]}, count={c}}},')
+            lines.append(f'        }},')
+
+            # 1위 플레이어
+            top_player = data.get("top_player", "")
+            lines.append(f'        top_player = "{top_player}",')
+
+            lines.append(f'    }},')
+
+        lines.append(f'}}')
+        lines.append("")
+
+    output_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"✓ {output_path} 생성 완료")
+
+
 def generate_lua(mplus_data: dict, raid_data: dict, output_path: Path):
     """bis_data.lua 파일을 생성합니다."""
     today = datetime.now().strftime("%Y-%m-%d")
@@ -648,20 +868,30 @@ def main():
     # ── M+ 데이터 수집 ──
     print("==> murlok.io에서 M+ BIS 데이터 수집 중...")
     mplus_data = {}
+    extra_data = {}
     total_specs = sum(len(c["specs"]) for c in CLASS_SPECS.values())
     current = 0
 
     for class_id, class_info in CLASS_SPECS.items():
         mplus_data[class_id] = {}
+        extra_data[class_id] = {}
 
         for spec in class_info["specs"]:
             current += 1
             label = f"[{current}/{total_specs}]"
             print(f"  {label} {class_info['name']} - {spec['name']}...", end=" ", flush=True)
 
-            gear = fetch_spec_gear(class_info["slug"], spec["slug"], "m+")
+            result = fetch_spec_all(class_info["slug"], spec["slug"], "m+")
+            gear = result.get("gear", {})
             if gear:
                 mplus_data[class_id][spec["index"]] = gear
+                extra_data[class_id][spec["index"]] = {
+                    "stats": result.get("stats", []),
+                    "embellishments": result.get("embellishments", []),
+                    "enchantments": result.get("enchantments", []),
+                    "gems": result.get("gems", []),
+                    "top_player": result.get("top_player", ""),
+                }
                 print(f"✓ {len(gear)}개 슬롯")
             else:
                 print("✗ 데이터 없음")
@@ -695,6 +925,10 @@ def main():
 
     # ── Lua 파일 생성 ──
     generate_lua(mplus_data, raid_data, output_path)
+
+    # ── extra_data.lua 생성 ──
+    extra_path = project_dir / "extra_data.lua"
+    generate_extra_lua(extra_data, extra_path)
 
 
 if __name__ == "__main__":
