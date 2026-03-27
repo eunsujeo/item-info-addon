@@ -185,45 +185,43 @@ STAT_NAMES_EN_KO = {
 }
 
 
-def fetch_stat_priority(class_slug: str, spec_slug: str, role: str, page) -> list:
-    """wowhead 스탯 우선순위 페이지에서 순서를 추출합니다."""
-    url = f"https://www.wowhead.com/ko/guide/classes/{class_slug}/{spec_slug}/stat-priority-pve-{role}"
-    try:
-        page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        page.wait_for_timeout(5000)
-    except Exception:
-        return []
+def parse_stat_line(line: str) -> list:
+    """스탯 우선순위 라인을 파싱합니다.
+    예: 'Strength >> Crit >= Mastery >= Versatility >> Haste'
+    → ['치명타', '특화', '유연성', '가속']
+    """
+    # >> >= > = 를 모두 구분자로 사용
+    parts = re.split(r'\s*>{1,2}=?\s*|\s*>=\s*|\s*=\s*', line)
+    stats = []
+    for part in parts:
+        part = part.strip().lower()
+        for en, ko in STAT_NAMES_EN_KO.items():
+            if en == part and ko not in stats:
+                stats.append(ko)
+                break
+    # 주 스탯(지능/힘/민첩) 제외
+    stats = [s for s in stats if s not in ("지능", "힘", "민첩")]
+    return stats
 
+
+def fetch_stat_priority_from_bis(page) -> list:
+    """현재 로드된 BIS 페이지에서 스탯 우선순위를 추출합니다.
+    장식 수집과 같은 페이지이므로 추가 요청 불필요.
+    """
     text = page.inner_text("body")
     lines = text.split("\n")
 
-    # 스탯 이름이 연속으로 나오는 구간 찾기 (첫 번째 블록)
-    stats = []
-    found_first = False
+    stat_words = ["Crit", "Haste", "Mastery", "Versatility"]
+
     for line in lines:
-        line = line.strip().lower()
-        if not line:
-            continue
+        line = line.strip()
+        # ">" 포함 + 보조 스탯 이름 2개 이상 → 스탯 우선순위 라인
+        if ">" in line and sum(1 for s in stat_words if s in line) >= 2:
+            result = parse_stat_line(line)
+            if len(result) >= 2:
+                return result
 
-        # "=" 으로 연결된 동급 스탯 처리
-        parts = [p.strip() for p in line.replace("=", ">").split(">") if p.strip()]
-        matched_any = False
-        for part in parts:
-            part = part.strip()
-            for en, ko in STAT_NAMES_EN_KO.items():
-                if part == en and ko not in stats:
-                    stats.append(ko)
-                    matched_any = True
-                    break
-
-        if matched_any:
-            found_first = True
-        elif found_first and not matched_any:
-            break  # 스탯 블록 끝
-
-    # 지능 제외 (보조 스탯만)
-    stats = [s for s in stats if s != "지능"]
-    return stats
+    return []
 
 
 def detect_slot(text: str) -> str:
@@ -460,14 +458,9 @@ def main():
                 label = f"{class_info['name']} {spec['name']}"
                 print(f"  [{count}/{total_specs}] {label}...", end=" ", flush=True)
 
-                # 스탯 우선순위
-                stats = fetch_stat_priority(
-                    class_info["slug"], spec["slug"], spec["role"], page
-                )
-                time.sleep(random.uniform(4, 7))
-
-                # 장식 (BIS 가이드)
+                # 장식 + 스탯 (BIS 가이드 — 같은 페이지)
                 embels = fetch_embellishments(class_info["slug"], spec["slug"], page)
+                stats = fetch_stat_priority_from_bis(page)  # 이미 로드된 페이지 재사용
                 time.sleep(random.uniform(4, 7))
 
                 # 마부/보석 (enchants-gems 가이드)

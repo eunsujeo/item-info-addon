@@ -6,7 +6,7 @@ ItemInfoExtraData = {}
 
 ItemInfoExtraData["DEATHKNIGHT"] = {
     [1] = { -- 혈기
-        stats = {"가속"},
+        stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="로아 신봉자의 고리", id=251513},
             {name="안정화 보석 사선 주머니", id=251490},
@@ -96,7 +96,7 @@ ItemInfoExtraData["DEMONHUNTER"] = {
         },
     },
     [2] = { -- 복수
-        stats = {"가속", "치명타", "유연성", "특화"},
+        stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240167},
@@ -164,7 +164,7 @@ ItemInfoExtraData["DRUID"] = {
         },
     },
     [3] = { -- 수호
-        stats = {"가속", "유연성", "치명타", "특화"},
+        stats = {"가속", "유연성", "특화", "치명타"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240166},
@@ -280,7 +280,7 @@ ItemInfoExtraData["EVOKER"] = {
 
 ItemInfoExtraData["HUNTER"] = {
     [1] = { -- 야수
-        stats = {"특화", "가속", "치명타", "유연성"},
+        stats = {"치명타", "특화", "가속", "유연성"},
         embellishments = {
             {name="세계지기의 껍질죔쇠띠", id=244611},
             {name="세계지기의 뿌리끌신", id=244610},
@@ -302,7 +302,7 @@ ItemInfoExtraData["HUNTER"] = {
         },
     },
     [2] = { -- 사격
-        stats = {"치명타", "특화", "유연성", "가속"},
+        stats = {"치명타", "특화", "가속", "유연성"},
         embellishments = {
             {name="세계지기의 뿌리끌신", id=244610},
             {name="세계지기의 껍질죔쇠띠", id=244611},
@@ -324,7 +324,7 @@ ItemInfoExtraData["HUNTER"] = {
         },
     },
     [3] = { -- 생존
-        stats = {"특화"},
+        stats = {"특화", "치명타", "가속", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240167},
@@ -371,7 +371,7 @@ ItemInfoExtraData["MAGE"] = {
         },
     },
     [2] = { -- 화염
-        stats = {"가속", "특화", "유연성", "치명타"},
+        stats = {"가속", "특화", "치명타", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},
@@ -393,7 +393,7 @@ ItemInfoExtraData["MAGE"] = {
         },
     },
     [3] = { -- 냉기
-        stats = {"특화", "치명타", "가속", "유연성"},
+        stats = {"치명타", "특화", "가속", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},
@@ -418,7 +418,7 @@ ItemInfoExtraData["MAGE"] = {
 
 ItemInfoExtraData["MONK"] = {
     [1] = { -- 양조
-        stats = {"유연성", "치명타", "특화", "가속"},
+        stats = {"치명타", "유연성", "특화", "가속"},
         embellishments = {
             {name="로아 신봉자의 고리", id=251513},
             {name="안정화 보석 사선 주머니", id=251490},
@@ -487,7 +487,7 @@ ItemInfoExtraData["MONK"] = {
 
 ItemInfoExtraData["PALADIN"] = {
     [1] = { -- 신성
-        stats = {"특화", "가속", "치명타", "유연성"},
+        stats = {"가속", "특화", "치명타", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240167},
@@ -509,7 +509,7 @@ ItemInfoExtraData["PALADIN"] = {
         },
     },
     [2] = { -- 보호
-        stats = {"가속", "유연성", "특화", "치명타"},
+        stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240166},
@@ -531,7 +531,7 @@ ItemInfoExtraData["PALADIN"] = {
         },
     },
     [3] = { -- 징벌
-        stats = {"특화", "치명타", "가속", "유연성"},
+        stats = {"특화", "가속", "치명타", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="로아 신봉자의 고리", id=251513},
@@ -578,7 +578,7 @@ ItemInfoExtraData["PRIEST"] = {
         },
     },
     [2] = { -- 신성
-        stats = {"치명타", "유연성", "특화", "가속"},
+        stats = {"치명타", "가속", "특화", "유연성"},
         embellishments = {
             {name="비전매듭 장식끈", id=239664},
             {name="다크문 인장: 사냥", id=245876},
@@ -647,7 +647,7 @@ ItemInfoExtraData["ROGUE"] = {
         },
     },
     [2] = { -- 무법
-        stats = {"가속"},
+        stats = {"치명타", "가속", "유연성", "특화"},
         embellishments = {
             {name="비전매듭 안감", id=240166},
             {name="오색 집중의 눈동자", id=251488},
@@ -669,7 +669,7 @@ ItemInfoExtraData["ROGUE"] = {
         },
     },
     [3] = { -- 잠행
-        stats = {"특화"},
+        stats = {"특화", "가속", "치명타", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240167},
@@ -694,7 +694,7 @@ ItemInfoExtraData["ROGUE"] = {
 
 ItemInfoExtraData["SHAMAN"] = {
     [1] = { -- 정기
-        stats = {"유연성"},
+        stats = {"특화", "치명타", "가속", "유연성"},
         embellishments = {
         },
         enchantments = {
@@ -714,7 +714,7 @@ ItemInfoExtraData["SHAMAN"] = {
         },
     },
     [2] = { -- 고양
-        stats = {"가속", "특화", "치명타", "유연성"},
+        stats = {"특화", "가속", "치명타", "유연성"},
         embellishments = {
             {name="Darkmoon Sigil: Hunt", id=245876},
             {name="Arcanoweave Lining", id=240167},
@@ -738,7 +738,7 @@ ItemInfoExtraData["SHAMAN"] = {
         },
     },
     [3] = { -- 복원
-        stats = {"치명타", "특화", "유연성", "가속"},
+        stats = {"치명타", "가속", "유연성", "특화"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240167},
@@ -763,28 +763,6 @@ ItemInfoExtraData["SHAMAN"] = {
 
 ItemInfoExtraData["WARLOCK"] = {
     [1] = { -- 고통
-        stats = {"특화", "치명타", "가속", "유연성"},
-        embellishments = {
-            {name="비전매듭 안감", id=240166},
-            {name="다크문 인장: 사냥", id=245875},
-        },
-        enchantments = {
-            {slot="무기", name="무기 마법부여 - 잔알라이의 정밀함", id=243971},
-            {slot="머리", name="투구 마법부여 - 강화된 광역회피의 룬", id=244007},
-            {slot="가슴", name="가슴보호구 마법부여 - 세계혼의 징표", id=243977},
-            {slot="어깨", name="어깨보호구 마법부여 - 독수리의 비행", id=243961},
-            {slot="다리", name="태양불꽃 비단 마법실타래", id=240133},
-            {slot="발", name="장화 마법부여 - 스라소니의 기민함", id=243953},
-            {slot="반지", name="반지 마법부여 - 실버문의 기민함", id=244015},
-        },
-        gems = {
-            {name="불가해의 영원노래 다이아몬드", id=240983},
-            {name="무결한 쾌속의 석류석", id=240906},
-            {name="무결한 치명적인 자수정", id=240898},
-            {name="무결한 강력한 감람석", id=240892},
-        },
-    },
-    [2] = { -- 악마
         stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240166},
@@ -806,8 +784,30 @@ ItemInfoExtraData["WARLOCK"] = {
             {name="무결한 강력한 감람석", id=240892},
         },
     },
+    [2] = { -- 악마
+        stats = {"치명타", "가속", "특화", "유연성"},
+        embellishments = {
+            {name="비전매듭 안감", id=240166},
+            {name="다크문 인장: 사냥", id=245875},
+        },
+        enchantments = {
+            {slot="무기", name="무기 마법부여 - 잔알라이의 정밀함", id=243971},
+            {slot="머리", name="투구 마법부여 - 강화된 광역회피의 룬", id=244007},
+            {slot="가슴", name="가슴보호구 마법부여 - 세계혼의 징표", id=243977},
+            {slot="어깨", name="어깨보호구 마법부여 - 독수리의 비행", id=243961},
+            {slot="다리", name="태양불꽃 비단 마법실타래", id=240133},
+            {slot="발", name="장화 마법부여 - 스라소니의 기민함", id=243953},
+            {slot="반지", name="반지 마법부여 - 실버문의 기민함", id=244015},
+        },
+        gems = {
+            {name="불가해의 영원노래 다이아몬드", id=240983},
+            {name="무결한 쾌속의 석류석", id=240906},
+            {name="무결한 치명적인 자수정", id=240898},
+            {name="무결한 강력한 감람석", id=240892},
+        },
+    },
     [3] = { -- 파괴
-        stats = {"가속", "특화", "치명타", "유연성"},
+        stats = {"치명타", "가속", "특화", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240166},
             {name="다크문 인장: 사냥", id=245875},
@@ -832,7 +832,7 @@ ItemInfoExtraData["WARLOCK"] = {
 
 ItemInfoExtraData["WARRIOR"] = {
     [1] = { -- 무기
-        stats = {"치명타", "가속", "특화", "유연성"},
+        stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},
@@ -876,7 +876,7 @@ ItemInfoExtraData["WARRIOR"] = {
         },
     },
     [3] = { -- 방어
-        stats = {"가속", "치명타", "유연성", "특화"},
+        stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240166},
