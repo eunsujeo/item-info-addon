@@ -168,12 +168,12 @@ SLOT_MAP = {
 }
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ItemInfo-WoW-Addon/2.0",
-    "Accept": "text/html,application/xhtml+xml",
-    "Accept-Language": "en-US,en;q=0.9",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9,ko;q=0.8",
 }
 
-REQUEST_DELAY = 0.8  # 요청 간 딜레이 (초)
+REQUEST_DELAY = 2.0  # 요청 간 딜레이 (초)
 
 
 def fetch_spec_gear(class_slug: str, spec_slug: str, content_type: str = "m+") -> dict:

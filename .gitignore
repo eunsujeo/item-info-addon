@@ -12,3 +12,6 @@
 
 # luarocks
 luarocks/
+
+# secrets
+.env

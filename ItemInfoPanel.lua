@@ -176,6 +176,7 @@ local function BuildPanel()
     f:SetSize(PANEL_WIDTH, panelH)
     f:SetPoint("CENTER", UIParent, "CENTER", 300, 0)
     f:SetFrameStrata("DIALOG")
+    tinsert(UISpecialFrames, "ItemInfoBISPanel")
     f:SetMovable(true)
     f:EnableMouse(true)
     f:RegisterForDrag("LeftButton")
@@ -197,7 +198,7 @@ local function BuildPanel()
     local title = f:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOPLEFT", f, "TOPLEFT", PADDING, -6)
     title:SetTextColor(COLOR.title.r, COLOR.title.g, COLOR.title.b, 1)
-    title:SetText("최적 장비")
+    title:SetText("TOP USER 50")
     f.title = title
 
     -- 닫기 버튼
@@ -327,6 +328,7 @@ local function BuildPanel()
                 else
                     GameTooltip:SetPoint("TOPRIGHT", panel, "TOPLEFT", -4, 0)
                 end
+                ItemInfoBIS.panelTooltipActive = true
                 GameTooltip:SetHyperlink(bisLink)
                 local source = ItemInfoBIS.GetSlotBISSource(self.slotId)
                 if source and source ~= "" then
@@ -366,6 +368,7 @@ local function BuildPanel()
         end)
         row:SetScript("OnLeave", function(self)
             self.highlight:Hide()
+            ItemInfoBIS.panelTooltipActive = false
             GameTooltip:Hide()
             ShoppingTooltip1:Hide()
         end)
@@ -480,11 +483,11 @@ function ItemInfoPanel.Refresh()
 
     -- 요약
     if not ItemInfoBIS.HasData() then
-        panel.summary:SetText("|cffff6060이 콘텐츠의 BIS 데이터가 없습니다.|r")
+        panel.summary:SetText("|cffff6060이 콘텐츠의 데이터가 없습니다.|r")
     elseif ItemInfoBIS.IsViewingOwnSpec() then
         local bisCount, _, total = ItemInfoBIS.GetSummary()
         panel.summary:SetText(string.format(
-            "BIS 달성: |cffffd700%d|r / %d 슬롯", bisCount, total
+            "달성: |cffffd700%d|r / %d 슬롯", bisCount, total
         ))
     else
         local _, _, total = ItemInfoBIS.GetSummary()
@@ -495,7 +498,7 @@ function ItemInfoPanel.Refresh()
 
     -- 메타 정보
     local updateDate = ItemInfoBIS.GetUpdateDate()
-    local ctLabel = currentCT == "mplus" and "murlok.io (Top 50)" or "wowhead"
+    local ctLabel = currentCT == "raid" and "레이드 가이드" or "쐐기 상위 50명"
     panel.metaText:SetText(ctLabel .. " | 업데이트: " .. updateDate)
 end
 

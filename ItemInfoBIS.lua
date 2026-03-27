@@ -15,8 +15,8 @@ local activeContentType = "mplus"
 
 -- 콘텐츠 타입 상수
 ItemInfoBIS.CONTENT_TYPES = {
-    {id = "mplus", name = "M+"},
-    {id = "raid",  name = "레이드"},
+    {id = "raid",  name = "BiS"},
+    {id = "mplus", name = "쐐기"},
 }
 
 -- 슬롯 ID → 한글 이름
@@ -250,6 +250,102 @@ function ItemInfoBIS.GetClassName(classId)
         if c.id == classId then return c.name end
     end
     return classId
+end
+
+-- ============================================================
+-- 툴팁 BIS 표시: 아이템 툴팁에 BIS 여부 + 획득처 표시
+-- ============================================================
+
+-- 역방향 조회 테이블: itemId → { {contentLabel, source, slotId}, ... }
+local tooltipBISLookup = {}
+
+--- 현재 플레이어 클래스/스펙 기준으로 역방향 조회 테이블 구축
+function ItemInfoBIS.BuildTooltipLookup()
+    tooltipBISLookup = {}
+    if not ItemInfoBISData then return end
+    local _, class = UnitClass("player")
+    local specIndex = GetSpecialization()
+    if not class or not specIndex then return end
+
+    for _, ct in ipairs(ItemInfoBIS.CONTENT_TYPES) do
+        local contentData = ItemInfoBISData[ct.id]
+        if contentData and contentData[class] and contentData[class][specIndex] then
+            for slotId, entry in pairs(contentData[class][specIndex]) do
+                if type(entry) == "table" then
+                    local itemId = entry[1]
+                    local source = entry[3]
+                    if not tooltipBISLookup[itemId] then
+                        tooltipBISLookup[itemId] = {}
+                    end
+                    table.insert(tooltipBISLookup[itemId], {
+                        label = ct.name,
+                        source = source,
+                        slotId = slotId,
+                    })
+                end
+            end
+        end
+    end
+end
+
+--- 아이템 ID로 BIS 정보 조회
+-- @return nil 또는 { {label, source, slotId}, ... }
+function ItemInfoBIS.GetTooltipBISInfo(itemId)
+    return tooltipBISLookup[itemId]
+end
+
+-- 패널 툴팁 표시 중 플래그 (중복 방지)
+ItemInfoBIS.panelTooltipActive = false
+
+--- 게임 툴팁에 BIS 정보 추가 (TooltipDataProcessor 콜백)
+local function OnTooltipSetItem(tooltip, data)
+    if tooltip ~= GameTooltip then return end
+    if ItemInfoBIS.panelTooltipActive then return end
+    local _, itemLink = tooltip:GetItem()
+    if not itemLink then return end
+    local itemId = tonumber(itemLink:match("|Hitem:(%d+):"))
+    if not itemId then return end
+
+    local bisEntries = tooltipBISLookup[itemId]
+    if not bisEntries then return end
+
+    -- 콘텐츠 타입 라벨 모으기 (중복 제거)
+    local labels = {}
+    local seen = {}
+    local sources = {}
+    for _, entry in ipairs(bisEntries) do
+        if not seen[entry.label] then
+            seen[entry.label] = true
+            labels[#labels + 1] = entry.label
+        end
+        if entry.source and not sources[entry.source] then
+            sources[entry.source] = true
+        end
+    end
+
+    -- 콘텐츠별 툴팁 라벨
+    local TOOLTIP_LABELS = {
+        ["BiS"]  = "레이드 가이드 추천",
+        ["쐐기"] = "쐐기 상위 50명 장비",
+    }
+
+    tooltip:AddLine(" ")
+    for _, label in ipairs(labels) do
+        tooltip:AddLine("|cff00ff00★ " .. (TOOLTIP_LABELS[label] or label) .. "|r")
+    end
+
+    for source in pairs(sources) do
+        tooltip:AddLine("|cffffd700획득처:|r " .. tostring(source))
+    end
+
+    tooltip:Show()
+end
+
+--- 툴팁 훅 등록
+function ItemInfoBIS.InitTooltipHook()
+    if TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall then
+        TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, OnTooltipSetItem)
+    end
 end
 
 --- 테스트용: BIS 맵 직접 주입

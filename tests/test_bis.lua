@@ -173,4 +173,63 @@ describe("ItemInfoBIS", function()
 
     end)
 
+    -- ============================================================
+    describe("BuildTooltipLookup", function()
+
+        it("현재 스펙의 BIS 아이템 ID로 역방향 조회가 가능하다", function()
+            ItemInfoBIS.BuildTooltipLookup()
+            -- 죽기 냉기(스펙2) 머리 슬롯의 아이템 ID 가져오기
+            local contentData = ItemInfoBISData["mplus"]
+            local entry = contentData["DEATHKNIGHT"][2][1] -- 냉기 머리
+            local itemId = entry[1]
+            local info = ItemInfoBIS.GetTooltipBISInfo(itemId)
+            assert.is_not_nil(info)
+            assert.is_true(#info >= 1)
+            -- M+ 라벨이 포함되어 있어야 함
+            local hasLabel = false
+            for _, e in ipairs(info) do
+                if e.label == "M+" then hasLabel = true end
+            end
+            assert.is_true(hasLabel)
+        end)
+
+        it("BIS가 아닌 아이템은 nil을 반환한다", function()
+            ItemInfoBIS.BuildTooltipLookup()
+            assert.is_nil(ItemInfoBIS.GetTooltipBISInfo(99999))
+        end)
+
+        it("M+과 레이드 모두에 있는 아이템은 두 라벨 모두 반환한다", function()
+            ItemInfoBIS.BuildTooltipLookup()
+            -- M+과 레이드 데이터에서 동일 아이템 ID 찾기
+            local mplusData = ItemInfoBISData["mplus"]["DEATHKNIGHT"][2]
+            local raidData  = ItemInfoBISData["raid"] and ItemInfoBISData["raid"]["DEATHKNIGHT"] and ItemInfoBISData["raid"]["DEATHKNIGHT"][2]
+            if not raidData then return end -- 레이드 데이터 없으면 스킵
+
+            for slotId, mEntry in pairs(mplusData) do
+                if raidData[slotId] and type(mEntry) == "table" and type(raidData[slotId]) == "table" then
+                    if mEntry[1] == raidData[slotId][1] then
+                        local info = ItemInfoBIS.GetTooltipBISInfo(mEntry[1])
+                        assert.is_not_nil(info)
+                        local labels = {}
+                        for _, e in ipairs(info) do labels[e.label] = true end
+                        assert.is_true(labels["M+"] and labels["레이드"])
+                        return
+                    end
+                end
+            end
+            -- 동일 아이템이 없으면 테스트 스킵 (pass)
+        end)
+
+        it("획득처 정보가 포함되어 있다", function()
+            ItemInfoBIS.BuildTooltipLookup()
+            local contentData = ItemInfoBISData["mplus"]
+            local entry = contentData["DEATHKNIGHT"][2][1]
+            local info = ItemInfoBIS.GetTooltipBISInfo(entry[1])
+            assert.is_not_nil(info)
+            assert.is_not_nil(info[1].source)
+            assert.are.equal(entry[3], info[1].source)
+        end)
+
+    end)
+
 end)
