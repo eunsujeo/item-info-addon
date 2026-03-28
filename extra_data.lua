@@ -6,7 +6,7 @@ ItemInfoExtraData = {}
 
 ItemInfoExtraData["DEATHKNIGHT"] = {
     [1] = { -- 혈기
-        stats = {"가속", "치명타", "특화", "유연성"},
+        stats = {"치명타", "가속", "특화", "유연성"},
         embellishments = {
             {name="로아 신봉자의 고리", id=251513},
             {name="안정화 보석 사선 주머니", id=251490},
@@ -31,6 +31,7 @@ ItemInfoExtraData["DEATHKNIGHT"] = {
         stats = {"치명타", "특화", "가속", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
+            {name="다크문 인장: 사냥", id=245876},
         },
         enchantments = {
             {slot="어깨", name="어깨보호구 마법부여 - 아킬존의 신속함", id=243963},
@@ -146,6 +147,7 @@ ItemInfoExtraData["DRUID"] = {
         stats = {"특화", "가속", "치명타", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240166},
+            {name="다크문 인장: 사냥", id=245876},
         },
         enchantments = {
             {slot="무기", name="무기 마법부여 - 렌도레이의 명민함", id=244029},
@@ -164,7 +166,7 @@ ItemInfoExtraData["DRUID"] = {
         },
     },
     [3] = { -- 수호
-        stats = {"가속", "유연성", "특화", "치명타"},
+        stats = {"가속", "특화", "유연성", "치명타"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245876},
             {name="비전매듭 안감", id=240166},
@@ -255,7 +257,7 @@ ItemInfoExtraData["EVOKER"] = {
         },
     },
     [3] = { -- 증강
-        stats = {"치명타", "가속", "특화", "유연성"},
+        stats = {},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},
@@ -418,7 +420,7 @@ ItemInfoExtraData["MAGE"] = {
 
 ItemInfoExtraData["MONK"] = {
     [1] = { -- 양조
-        stats = {"치명타", "유연성", "특화", "가속"},
+        stats = {"치명타", "유연성", "가속", "특화"},
         embellishments = {
             {name="로아 신봉자의 고리", id=251513},
             {name="안정화 보석 사선 주머니", id=251490},
@@ -462,7 +464,7 @@ ItemInfoExtraData["MONK"] = {
         },
     },
     [3] = { -- 풍운
-        stats = {"가속", "치명타", "특화", "유연성"},
+        stats = {"치명타", "가속", "특화", "유연성"},
         embellishments = {
             {name="다크문 인장: 사냥", id=245875},
             {name="로아 신봉자의 고리", id=251513},
@@ -531,7 +533,7 @@ ItemInfoExtraData["PALADIN"] = {
         },
     },
     [3] = { -- 징벌
-        stats = {"특화", "가속", "치명타", "유연성"},
+        stats = {"가속", "특화", "치명타", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="로아 신봉자의 고리", id=251513},
@@ -696,6 +698,8 @@ ItemInfoExtraData["SHAMAN"] = {
     [1] = { -- 정기
         stats = {"특화", "치명타", "가속", "유연성"},
         embellishments = {
+            {name="다크문 인장: 사냥", id=245876},
+            {name="뿌리감시관의 예복", id=0},
         },
         enchantments = {
             {slot="무기", name="무기 마법부여 - 비전 숙련", id=244031},
@@ -714,7 +718,7 @@ ItemInfoExtraData["SHAMAN"] = {
         },
     },
     [2] = { -- 고양
-        stats = {"특화", "가속", "치명타", "유연성"},
+        stats = {},
         embellishments = {
             {name="Darkmoon Sigil: Hunt", id=245876},
             {name="Arcanoweave Lining", id=240167},
@@ -807,7 +811,7 @@ ItemInfoExtraData["WARLOCK"] = {
         },
     },
     [3] = { -- 파괴
-        stats = {"치명타", "가속", "특화", "유연성"},
+        stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240166},
             {name="다크문 인장: 사냥", id=245875},
@@ -832,7 +836,7 @@ ItemInfoExtraData["WARLOCK"] = {
 
 ItemInfoExtraData["WARRIOR"] = {
     [1] = { -- 무기
-        stats = {"가속", "치명타", "특화", "유연성"},
+        stats = {"가속", "특화", "치명타", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},

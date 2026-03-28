@@ -233,6 +233,34 @@ def detect_slot(text: str) -> str:
     return ""
 
 
+# 알려진 장식 이름 → Optional Reagent ID
+KNOWN_EMBELLISHMENTS = {
+    "darkmoon sigil: hunt": {"name": "다크문 인장: 사냥", "id": 245876},
+    "darkmoon sigil: void": {"name": "다크문 인장: 공허", "id": 245874},
+    "darkmoon sigil: blood": {"name": "다크문 인장: 혈기", "id": 245872},
+    "darkmoon sigil: rot": {"name": "다크문 인장: 부식", "id": 245878},
+    "arcanoweave lining": {"name": "비전매듭 안감", "id": 240167},
+    "sunfire silk lining": {"name": "태양불꽃 비단 안감", "id": 240165},
+    "blessed pango charm": {"name": "축복받은 천산갑 부적", "id": 244604},
+    "devouring banding": {"name": "포식의 결속끈", "id": 244675},
+    "primal spore binding": {"name": "원시 포자 결속끈", "id": 244608},
+    "prismatic focusing iris": {"name": "오색 집중의 눈동자", "id": 251488},
+    "stabilizing gemstone bandolier": {"name": "안정화 보석 사선 주머니", "id": 251490},
+    "root warden's regalia": {"name": "뿌리감시관의 예복", "id": 0},
+    "loa worshiper's band": {"name": "로아 신봉자의 고리", "id": 251513},
+    "knight commander's palisade": {"name": "기사단장의 방책", "id": 244472},
+    "signet of azerothian blessings": {"name": "아제로스의 축복 인장", "id": 241140},
+    # 한글 이름도 매핑
+    "다크문 인장: 사냥": {"name": "다크문 인장: 사냥", "id": 245876},
+    "다크문 인장: 공허": {"name": "다크문 인장: 공허", "id": 245874},
+    "다크문 인장: 혈기": {"name": "다크문 인장: 혈기", "id": 245872},
+    "다크문 인장: 부식": {"name": "다크문 인장: 부식", "id": 245878},
+    "비전매듭 안감": {"name": "비전매듭 안감", "id": 240167},
+    "태양불꽃 비단 안감": {"name": "태양불꽃 비단 안감", "id": 240165},
+    "뿌리감시관의 예복": {"name": "뿌리감시관의 예복", "id": 0},
+}
+
+
 def fetch_embellishments(class_slug: str, spec_slug: str, page) -> list:
     """wowhead BIS 가이드에서 Playwright로 장식 데이터를 추출합니다."""
     url = f"https://www.wowhead.com/ko/guide/classes/{class_slug}/{spec_slug}/bis-gear"
@@ -247,7 +275,7 @@ def fetch_embellishments(class_slug: str, spec_slug: str, page) -> list:
     soup = BeautifulSoup(html, "html.parser")
     items = []
 
-    # "Best Embellishments" 헤딩을 찾고 그 뒤의 아이템 링크 추출
+    # 방법 1: "Best Embellishments" 헤딩 뒤 아이템 링크
     for h in soup.find_all(["h2", "h3", "h4"]):
         if "embellishment" in h.get_text(strip=True).lower():
             seen = set()
@@ -265,14 +293,24 @@ def fetch_embellishments(class_slug: str, spec_slug: str, page) -> list:
                             items.append({"name": name, "id": item_id})
                             if len(items) >= 2:
                                 break
-                # 다음 헤딩에 도달하면 중단
                 if hasattr(el, "name") and el.name in ["h2", "h3", "h4"] and el != h:
                     break
                 el = el.next_element
                 count += 1
-            break  # 첫 번째 embellishment 헤딩만 처리
+            break
 
-    return items
+    # 방법 2: 아이템 링크로 못 찾으면 페이지 전체 텍스트에서 알려진 장식 이름 검색
+    if len(items) < 2:
+        page_text = soup.get_text(separator="\n").lower()
+        seen_names = {i["name"].lower() for i in items}
+        for key, info in KNOWN_EMBELLISHMENTS.items():
+            if key in page_text and info["name"].lower() not in seen_names:
+                items.append({"name": info["name"], "id": info["id"]})
+                seen_names.add(info["name"].lower())
+                if len(items) >= 2:
+                    break
+
+    return items[:2]
 
 
 def fetch_enchants_gems(class_slug: str, spec_slug: str, role: str,
