@@ -6,86 +6,92 @@ set "PYTHONIOENCODING=utf-8"
 set "WOW_ADDON_DIR=D:\game\World of Warcraft\_retail_\Interface\AddOns\ItemInfo"
 
 echo ========================================
-echo   ItemInfo Update Pipeline
+echo   ItemInfo Full Update Pipeline
 echo ========================================
 
-if "%1"=="--skip-fetch" goto skip_fetch
-if "%1"=="--raid-only" goto raid_only
+if "%1"=="--skip-fetch" goto apply
+if "%1"=="--extra-only" goto extra
 
-echo --- [1/7] Fetch M+ data from murlok.io...
+echo --- [1/12] M+ gear from murlok.io...
 "%PYTHON%" scripts\update_bis.py --keep-raid
 if errorlevel 1 (
-    echo [1/7] FAILED
+    echo [1] FAILED
     exit /b 1
 )
 
-echo --- [2/7] Fetch Raid data from wowhead...
+echo --- [2/12] Raid gear from wowhead (Playwright)...
 "%PYTHON%" scripts\update_raid_bis.py
 if errorlevel 1 (
-    echo [2/7] FAILED
-    exit /b 1
+    echo [2] FAILED - continuing without raid update
 )
-goto apply
 
-:raid_only
-echo --- [1/7] Skipped M+ (--raid-only)
-echo --- [2/7] Fetch Raid data from wowhead...
-"%PYTHON%" scripts\update_raid_bis.py
-if errorlevel 1 (
-    echo [2/7] FAILED
-    exit /b 1
-)
-goto apply
-
-:skip_fetch
-echo --- [1/7] Skipped (--skip-fetch)
-echo --- [2/7] Skipped (--skip-fetch)
-
-:apply
-echo --- [3/7] Apply source mapping (cache)...
+echo --- [3/12] Apply source mapping...
 "%PYTHON%" scripts\apply_sources.py
 if errorlevel 1 (
-    echo [3/7] FAILED
+    echo [3] FAILED
     exit /b 1
 )
 
-echo --- [4/7] First verify...
+echo --- [4/12] Verify gear data...
 "%PYTHON%" scripts\verify_bis.py >nul 2>&1
 if errorlevel 1 (
     echo     Missing sources found. Auto-fetching...
-    echo --- [5/7] Blizzard API + wowhead lookup...
+    echo --- [5/12] Blizzard API lookup...
     "%PYTHON%" scripts\fetch_missing_sources.py
-    if errorlevel 1 (
-        echo [5/7] FAILED
-        exit /b 1
-    )
-    echo --- [6/7] Re-apply source mapping...
+    echo --- [6/12] Re-apply source mapping...
     "%PYTHON%" scripts\apply_sources.py
-    if errorlevel 1 (
-        echo [6/7] FAILED
-        exit /b 1
-    )
 ) else (
-    echo     No missing sources. Skipping fetch.
+    echo     No missing sources.
 )
 
-echo --- [7/9] Resolve enchant IDs...
+:extra
+if "%1"=="--extra-only" (
+    echo --- [1-6] Skipped (--extra-only)
+)
+
+echo --- [7/12] Stats/enchants/gems from archon.gg...
+"%PYTHON%" scripts\update_from_archon.py
+if errorlevel 1 (
+    echo [7] FAILED
+    exit /b 1
+)
+
+echo --- [8/12] Embellishments from wowhead (Playwright)...
+"%PYTHON%" scripts\merge_embellishments.py
+if errorlevel 1 (
+    echo [8] FAILED - continuing
+)
+
+echo --- [9/12] Resolve enchant IDs...
 "%PYTHON%" scripts\resolve_enchant_ids.py
 if errorlevel 1 (
-    echo [7/9] FAILED (non-critical, continuing)
+    echo [9] FAILED - continuing
 )
 
-echo --- [8/9] Resolve embellishment IDs...
+echo --- [10/12] Resolve embellishment IDs...
 "%PYTHON%" scripts\resolve_embel_ids.py
 if errorlevel 1 (
-    echo [8/9] FAILED (non-critical, continuing)
+    echo [10] FAILED - continuing
 )
 
-echo --- [9/9] Final verify...
-"%PYTHON%" scripts\verify_bis.py
+echo --- [11/12] Talents from murlok.io (Playwright)...
+"%PYTHON%" scripts\update_talents.py
 if errorlevel 1 (
-    echo FAILED: Add missing items to item_sources.lua manually, then re-run.
-    exit /b 1
+    echo [11] FAILED - continuing without talent update
+)
+
+if "%1"=="--extra-only" goto verify
+
+:apply
+if "%1"=="--skip-fetch" (
+    echo --- [1-11] Skipped (--skip-fetch)
+)
+
+:verify
+echo --- [12/12] Final verification...
+"%PYTHON%" scripts\verify_all.py
+if errorlevel 1 (
+    echo WARNING: Some verifications failed. Check output above.
 )
 
 echo --- Installing to WoW...
