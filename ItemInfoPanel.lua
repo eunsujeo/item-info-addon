@@ -364,6 +364,17 @@ local function BuildPanel()
         row.statusIcon = statusIcon
 
         row:EnableMouse(true)
+        row:SetScript("OnMouseUp", function(self)
+            if IsModifiedClick("CHATLINK") then
+                local bisLink = ItemInfoBIS.GetSlotBISItemLink(self.slotId)
+                if bisLink then
+                    local _, itemLink = GetItemInfo(bisLink)
+                    if itemLink then
+                        HandleModifiedItemClick(itemLink)
+                    end
+                end
+            end
+        end)
         row:SetScript("OnEnter", function(self)
             self.highlight:Show()
             local bisLink = ItemInfoBIS.GetSlotBISItemLink(self.slotId)
@@ -481,6 +492,14 @@ local function BuildPanel()
 
         row.itemId = nil
         row.tooltipData = nil  -- {name, count, slot} 커스텀 툴팁용
+        row:SetScript("OnMouseUp", function(self)
+            if IsModifiedClick("CHATLINK") and self.itemId and self.itemId > 0 then
+                local _, itemLink = GetItemInfo(self.itemId)
+                if itemLink then
+                    HandleModifiedItemClick(itemLink)
+                end
+            end
+        end)
         row:SetScript("OnEnter", function(self)
             self.highlight:Show()
             ItemInfoBIS.panelTooltipActive = true
