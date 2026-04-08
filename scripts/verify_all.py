@@ -108,8 +108,13 @@ def verify_talents():
     if "ItemInfoTalentData = {}" in content:
         return False, "talent_data.lua is empty"
 
-    # Count talent strings
-    talent_count = len(re.findall(r'\[(\d+)\] = \{ -- ', content))
+    # Count specs with talent strings
+    talent_count = 0
+    for cls_m in re.finditer(r'\["\w+"\]\s*=\s*\{', content):
+        start = cls_m.end()
+        next_cls = content.find('["', start + 1)
+        block = content[start:next_cls] if next_cls > 0 else content[start:]
+        talent_count += len(re.findall(r'\[\d+\]\s*=\s*\{', block))
     string_count = len(re.findall(r'"C[A-Za-z0-9+/=]{30,}"', content))
 
     summary = f"talent_data: {talent_count} specs, {string_count} talent strings"

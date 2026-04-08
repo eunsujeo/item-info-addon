@@ -1,6 +1,6 @@
 -- extra_data.lua
 -- 스탯 / 마법부여 / 보석 (archon.gg 기준)
--- 업데이트: 2026-04-07
+-- 업데이트: 2026-04-09
 
 ItemInfoExtraData = {}
 
@@ -811,7 +811,7 @@ ItemInfoExtraData["WARRIOR"] = {
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
             {slot="발", name="Shaladrassil's Roots", id=243983},
-            {slot="반지", name="Thalassian Haste", id=244011},
+            {slot="반지", name="Silvermoon's Alacrity", id=244015},
             {slot="무기", name="Berserker's Rage", id=243973},
         },
         gems = {
