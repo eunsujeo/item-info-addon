@@ -16,3 +16,9 @@ luarocks/
 # secrets
 .env
 settings.local.json
+
+# build artifacts
+dist/
+_embel_cache.json
+__pycache__/
+*.pyc
