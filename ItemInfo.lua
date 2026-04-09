@@ -44,6 +44,85 @@ function ItemInfo.OnPlayerLogin()
     ItemInfoBIS.BuildTooltipLookup()
     ItemInfoBIS.InitTooltipHook()
     ItemInfoPanel.Init()
+    ItemInfo.CreateMinimapButton()
+end
+
+-- 미니맵 버튼
+function ItemInfo.CreateMinimapButton()
+    local btn = CreateFrame("Button", "WhatToWriteMinimapButton", Minimap)
+    btn:SetSize(32, 32)
+    btn:SetFrameStrata("MEDIUM")
+    btn:SetFrameLevel(8)
+    btn:RegisterForClicks("anyUp")
+    btn:RegisterForDrag("LeftButton")
+    btn:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
+
+    -- 아이콘
+    local icon = btn:CreateTexture(nil, "ARTWORK")
+    icon:SetSize(18, 18)
+    icon:SetPoint("CENTER", 0, 1)
+    icon:SetTexture(136201)  -- Spell_Shadow_Shadowfury
+    icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+
+    -- 테두리
+    local border = btn:CreateTexture(nil, "OVERLAY")
+    border:SetSize(52, 52)
+    border:SetPoint("TOPLEFT")
+    border:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+
+    local bg = btn:CreateTexture(nil, "BACKGROUND")
+    bg:SetSize(20, 20)
+    bg:SetPoint("CENTER", 0, 1)
+    bg:SetTexture("Interface\\Minimap\\UI-Minimap-Background")
+
+    -- 위치 (SavedVariables로 저장)
+    local db = ItemInfoDB
+    if not db.minimapAngle then db.minimapAngle = 220 end
+
+    local function UpdatePosition()
+        local angle = math.rad(db.minimapAngle)
+        local radius = Minimap:GetWidth() / 2
+        btn:SetPoint("CENTER", Minimap, "CENTER", math.cos(angle) * radius, math.sin(angle) * radius)
+    end
+    UpdatePosition()
+
+    -- 드래그로 위치 변경
+    local isDragging = false
+    btn:SetScript("OnDragStart", function()
+        isDragging = true
+    end)
+    btn:SetScript("OnDragStop", function()
+        isDragging = false
+    end)
+    btn:SetScript("OnUpdate", function()
+        if not isDragging then return end
+        local mx, my = Minimap:GetCenter()
+        local cx, cy = GetCursorPosition()
+        local scale = Minimap:GetEffectiveScale()
+        cx, cy = cx / scale, cy / scale
+        db.minimapAngle = math.deg(math.atan2(cy - my, cx - mx))
+        btn:ClearAllPoints()
+        UpdatePosition()
+    end)
+
+    -- 클릭
+    btn:SetScript("OnClick", function(_, button)
+        if button == "LeftButton" then
+            ItemInfoPanel.Toggle()
+        end
+    end)
+
+    -- 툴팁
+    btn:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+        GameTooltip:AddLine("|cffffd700WhatToWriteItemInfo|r")
+        GameTooltip:AddLine("|cffffffffLeft-click:|r Toggle panel", 1, 1, 1)
+        GameTooltip:AddLine("|cffffffffDrag:|r Move button", 1, 1, 1)
+        GameTooltip:Show()
+    end)
+    btn:SetScript("OnLeave", function()
+        GameTooltip:Hide()
+    end)
 end
 
 -- 슬래시 커맨드
