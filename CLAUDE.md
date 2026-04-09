@@ -108,4 +108,4 @@ python scripts/update_talents.py           # murlok.io: 특성
 
 ## WoW 설치 경로
 
-`D:\game\World of Warcraft\_retail_\Interface\AddOns\ItemInfo`
+`D:\game\World of Warcraft\_retail_\Interface\AddOns\WhatToWriteItemInfo`

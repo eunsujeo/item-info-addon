@@ -3,7 +3,7 @@ setlocal
 
 set "PYTHON=C:\Users\User\AppData\Local\Programs\Python\Python312\python.exe"
 set "PYTHONIOENCODING=utf-8"
-set "WOW_ADDON_DIR=D:\game\World of Warcraft\_retail_\Interface\AddOns\ItemInfo"
+set "WOW_ADDON_DIR=D:\game\World of Warcraft\_retail_\Interface\AddOns\WhatToWriteItemInfo"
 
 echo ========================================
 echo   ItemInfo Full Update Pipeline
@@ -103,7 +103,7 @@ copy /y item_sources.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfoBIS.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfoPanel.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfo.lua "%WOW_ADDON_DIR%\" >nul
-copy /y ItemInfo.toc "%WOW_ADDON_DIR%\" >nul
+copy /y WhatToWriteItemInfo.toc "%WOW_ADDON_DIR%\" >nul
 
 echo ========================================
 echo   Done! Type /reload in game

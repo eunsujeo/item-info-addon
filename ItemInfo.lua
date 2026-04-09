@@ -3,7 +3,7 @@
 
 ItemInfo = ItemInfo or {}
 
-local ADDON_NAME = "ItemInfo"
+local ADDON_NAME = "WhatToWriteItemInfo"
 local frame = CreateFrame("Frame", ADDON_NAME .. "Frame", UIParent)
 
 frame:RegisterEvent("ADDON_LOADED")
