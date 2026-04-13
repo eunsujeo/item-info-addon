@@ -19,9 +19,9 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).parent.parent
 PYTHON = sys.executable
 
-TOTAL_SPECS = 39
+TOTAL_SPECS = 40
 CLASS_SPEC_COUNT = {
-    "DEATHKNIGHT": 3, "DEMONHUNTER": 2, "DRUID": 4, "EVOKER": 3,
+    "DEATHKNIGHT": 3, "DEMONHUNTER": 3, "DRUID": 4, "EVOKER": 3,
     "HUNTER": 3, "MAGE": 3, "MONK": 3, "PALADIN": 3, "PRIEST": 3,
     "ROGUE": 3, "SHAMAN": 3, "WARLOCK": 3, "WARRIOR": 3,
 }

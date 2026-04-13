@@ -1,113 +1,117 @@
 -- talent_data.lua
 -- 스펙별 특성 빌드 문자열 (murlok.io 1위 플레이어 기준)
--- 업데이트: 2026-04-09
+-- 업데이트: 2026-04-13
 
 ItemInfoTalentData = {
     ["DEATHKNIGHT"] = {
         [1] = { -- 혈기
-            "CoPASnrjTdwaLTX9NnLQoJJXfwY2mZmxMzMjhZbmZmmhxYmZMAAAAgZmZmZmZGmxYGAGzMzMAAAmZ2GDjZst0YZbZYy2wwGgZYAAYmZmBDMA",
-            "neunacht",
+            "CoPASnrjTdwaLTX9NnLQoJJXfwMzyMzwMmZMjZZmZmmZxYMzMGAAAAwgZmZmZMzYMAYmZmZGAAAzMbjhxMWWasstMMZbYYBwMGDAgZmZGYwA",
+            "yodadkt",
         },
         [2] = { -- 냉기
-            "CwPASnrjTdwaLTX9NnLQoJJXfAwMjZMDDz2MzMTz2MzYMjBAAAAAAAgZeAmZAwyMmZ2mZGzYGwmZxwQGY2YoxCAmBAmZGzAMzMjZMA",
-            "myzouth",
+            "CwPASnrjTdwaLTX9NnLQoJJXfAYmZMjZGDz2MzMTzmZGjZMAAAAAAAAMzgZAwyMmZ2mZGzYYgBmxiGLLA2mYDDYGAYmZMDmZwwMG",
+            "enerugi",
         },
         [3] = { -- 부정
-            "CwPASnrjTdwaLTX9NnLQoJJXfAwMjZmxYY2mZmZa2MzYMjBAAAAAAAgZGmZAwyMmZ2mZGzYYw2MLmZmFNzyCzGz20YBAzAAzMjZAmZmxMG",
-            "gigabests",
+            "CoPASnrjTdwaLTX9NnLQoJJXfwMzyMzwMmZmhZbmZmmZxMjZmxAAAAAmhZmZmZMzYAAzMzMzAAAYGbjhxM2WassYYy2wwGgZMAAAzMAMA",
+            "bugapproved",
         },
     },
     ["DEMONHUNTER"] = {
-        [1] = { -- 파멸
-            "CEkAG5bbocFKcv+yIq8fPd6ORZmZGzMz2MmZmxYmMmZAAAAAAAzmxsNDzMwMWmtZmZMzALDsNbmxwsopxMzYGbAAAADAABAzMYAIAAwA",
-            "gokkesokken",
-        },
         [2] = { -- 복수
-            "CUkAG5bbocFKcv+yIq8fPd6ORBAMjZmZMMzkZmhZWMjZwMjZGzYmZGDmtZGbPwMzyYYAAAAY2mBDjlFmwwMzYDAAAADMzMzMbtNzMDAAAAAwA",
-            "rampire",
+            "CUkAG5bbocFKcv+yIq8fPd6ORBAWmxMzMzwMyMzgZxMmBzMmZMzDMzMjBz2MjNzMGDDAAAAz2MYYstwEGmZGbAAAAYgZmZmZrtZmZMzAMAAAAG",
+            "zacdh",
+        },
+        [3] = { -- 포식
+            "CgcBG5bbocFKcv+yIq8fPd6ORBAWmxMzMzMzMGmBAAAAAAgxsNYGAAAAAAAAmxMMmZmZmZmZGzsYGjFtsxMzMzWbzMzAYYmZWmZmmtZ2mxgxMA",
+            "jabuka",
+        },
+        [1] = { -- 파멸
+            "CEkAG5bbocFKcv+yIq8fPd6ORZmZmZmZ2wMzMmZmMmZAAAAAAAzixsNzDYmBmx2sNzMjxALDsNbmxwsopxMzYGbAAAADAABAzMYAIAAwA",
+            "ronindh",
         },
     },
     ["DRUID"] = {
         [1] = { -- 조화
-            "CYGA8cL7tpvige+kkmGM9zUPWDAAAAAAAAAAAAAAAAWoMbNjxMDMmFmZmBYGzyMLDzYGbsMjZmZMzCGGgBYZbshpZmlRAAAA2MzMzMYzwYMDgZGAYA",
-            "lihanna",
+            "CYGA8cL7tpvige+kkmGM9zUPWDAAAAAAAAAAAAAAAAWoMbNjxMDMmFzMzMLAjZZmlZWMzM2YZmlxMjxGGGgx22MDGz2IwEAAAgFmZmZwmhxYAAYmBGA",
+            "dwilkz",
         },
         [2] = { -- 야성
-            "CcGA8cL7tpvige+kkmGM9zUPWDAAAAAAjZwMzMzMmtl5BWGbzYGzMDAAAALBzGMmZUzYWMzMzYMjZAAAAAAMwAAAAoZWmtZmZmtZWa2mZZDMzAsYGMAAmZwMbYA",
+            "CcGA8cL7tpvige+kkmGM9zUPWDAAAAAgZMDmZmZMmNzsM2mZmZMzAAAAwSwsZ4BMzomxsYmZmZZMjZAAAAAAMwAAAAoZWmlZmZmtZ2aWmZbBMzAswgBAAwMbYA",
             "turbogronil",
         },
         [3] = { -- 수호
-            "CgGA8cL7tpvige+kkmGM9zUPWDAAAAAAAAAAAgZmxsMzMjZ2MLDMWGwmZMaimZmlZmZmxYGGAAAAAwMWmBAAAgamlZZmZGAALYmBYxMYALW2GAMzGM",
+            "CgGA8cL7tpvige+kkmGM9zUPWDAAAAAAAAAAAgZmxsMMjZWMLzMzMWGY2MMaimZmlxMzMLjZGAAAAAAzYbGwy2MDGzyAYKAAAwGm5BAWMDGwCAMzAYA",
             "squishvegan",
         },
         [4] = { -- 회복
-            "CkGA8cL7tpvige+kkmGM9zUPWPMmZZMjZmxsNMMmFmFbzAAAAAAAAAAglBNbzw0MjhHwsYmZGLGeADAAAAgBAYGwyyYBTzMLDAgZbmtmlZWsxMz8AYmZB0MAAzMAMA",
+            "CkGA8cL7tpvige+kkmGM9zUPWPMmZZMjZmxsNMMmFmFbzAAAAAAAAAAglBNbzw0MjhxsYmZGLGGDAAAAgBAYGwyyYBTzMLDAgZbmtmlZWsxYGYmZB0MAAzMAMA",
             "vitalitie",
         },
     },
     ["EVOKER"] = {
+        [1] = { -- 황폐
+            "CEcBPJc41CfcseY0baneJ1IHrNmZmZbmZGMYmZZGjhZ2AAAAAAAAYmZghZM1YmZGAAAAMjZMmZWGzMwMLGYMjFWgBmhhGxCmZMzAYYA",
+            "gonski",
+        },
         [2] = { -- 보존
-            "CwbBPJc41CfcseY0baneJ1IHrBAAAAAYmZ22GYYm5BmFzYMz2MAAwYGzYmZMMTMmBAAAMzMTzYmZmxYGAAGzYjFYgZ0QDDLwMzMAMA",
+            "CwbBPJc41CfcseY0baneJ1IHrBAAAAAYmZ22GYYm5BmlZYMz2MGAAGzYGzMjhZixMAAAgZmZaGzMzMGzAAwYGbsADMjGaYYBGzMAMA",
             "cryve",
         },
         [3] = { -- 증강
-            "CEcBPJc41CfcseY0baneJ1IHrxMzMbzMzgBzMLzYMMzGAAAAAAAAmBz8AzYM1YmZGAAAAYMzMmZWGzMwMbzYwCsMGGLDgZiYDzMDmZAM",
+            "CEcBPJc41CfcseY0baneJ1IHrxMzMbzMzgBzMLzYMMzGAAAAAAAAmhHwYGjpGzMzAAAAAjZmxMzyYmBmZbGDWglxwYZAMTEbYmZwMDGM",
             "chum",
-        },
-        [1] = { -- 황폐
-            "CsbBPJc41CfcseY0baneJ1IHrBAAAAAAAAAAAzMDMDzwMgBjZaMzMNjx2MmZmZmHYmZGwMzMzYmZZmZgBGDWglxox2AyMBYDDMzghB",
-            "fazo",
         },
     },
     ["HUNTER"] = {
         [1] = { -- 야수
-            "C0PAo4YcvOcqUdzB9zV+NhSAcYzsNwAGwMsBZsAAgZGLzMDzwMzMYGzMzwMmZGzMzYbmZYMDLDNDAAAAAYGAAAMjxwMDQYYWALGA",
-            "nobackshot",
+            "C0PAo4YcvOcqUdzB9zV+NhSAcYzsNwAGwMsBZsAAgZGLzMDzwMzMYGzMzwMmZGzYGbzMDjZYZMNDAAAAAYGAAAGjZGmZACMzCYzA",
+            "morthunt",
         },
         [2] = { -- 사격
-            "C4PAo4YcvOcqUdzB9zV+NhSAcwCMwMGNWGQmBbAAAAAAAAAzYmZGbGzMjZYZMNjxYmttNzMzwMDLzMLjxsMMzAAAMjxAwMjNwAshB",
-            "undercoviira",
+            "C4PAo4YcvOcqUdzB9zV+NhSAcwCMwMGNWGQmBbAAAAAAAAAzYmZGbzYmZMDLjpZMGzsttZmZGmZYZmZZMmlhZGAAAjxAwMjNGGgNM",
+            "grimshunter",
         },
         [3] = { -- 생존
-            "C8PAo4YcvOcqUdzB9zV+NhSAcMgxMG2ILwMM0gFzMzMzwyAAAAAAgZMmZsNjxMmhlx0MAAAAgBAwyyMzsYmZmZMmZAzsBAjxMzGD",
+            "C8PAo4YcvOcqUdzB9zV+NhSAcMWwMzYmZb0sYYGmZawiZmZmZYZAAAAAAwMmZmZxMGzYGMmmBAAAAMAAWWmZmFzMzMMzYAzsZADjxMzGD",
             "mawgun",
         },
     },
     ["MAGE"] = {
         [1] = { -- 비전
-            "C4DAMhlVtghLZL4RZzExaQoBYNzwMLzMzsgZGamxAAAwAAMzklNzMzMzyyMTsAAwyMmZGzmZZmZGzMGDzMzYhZmZegZAAGAAAzsgZGwMAYYA",
-            "nakali",
+            "C4DAMhlVtghLZL4RZzExaQoBYNzwYZmZmFMzQzMzMAAAGAwMjmFbzMzMzyyMTsAAw2MmZGzmZZmZGzMGDzMzYhZmZMDAwAAAYmFYGwMAYYA",
+            "hairumageone",
         },
         [2] = { -- 화염
-            "C8DAMhlVtghLZL4RZzExaQoBYNzwYZmZmFMzIzMGAAAmZZGzYZWmZmmtllZAA2MzM2GzMzYDAAAAAWMzMzMAAYMDjZmZmZZAzMzMkxYMYGG",
-            "placement",
+            "C8DAMhlVtghLZL4RZzExaQoBYNzwMLzMzsgZGZmZGAAAGAwMz0sssMDAwmZmx2YmZGbAAAAAwiZmZGAAYMDjZmZmZZAYmhYGjBzwA",
+            "maguvek",
         },
         [3] = { -- 냉기
-            "CAEAMhlVtghLZL4RZzExaQoBYNzwMLzMzsMMzEzMGzMzMzmZmhZMzsMTzMLzCAYmZmllZm2AAgNAAAgFA2WGzMzgZbYMzYBAAgZ2mZwMMGwMYA",
+            "CAEAMhlVtghLZL4RZzExaQoBYZGGLzMzsMmZmYmxYmZmZWMzMjZMzsMTzMbzCAYmZmllZm2AAgNAAAgNA2WGzMzgZbYMDLAAAMz2MDmhxAmBD",
             "khaelt",
         },
     },
     ["MONK"] = {
         [1] = { -- 양조
-            "CwQAi6cZM+HWADeySjzG9Lwx8DAAAwMbbGDGz2M2YmZMAAAAAAALLYEzMwMMzmBmZmZYWYmxMLDLbz22sNMLAAwGCAAwsNLNzMzGDbAMzw0YAAAD",
+            "CwQAi6cZM+HWADeySjzG9Lwx8DAAAwMbbGDGz2M2YmZMAAAAAAALLYmYmBmhZ2MwMzMDzCzMmZ5BYZb22mthZBAA2QAAAmtZpZmZ2YYDgZGmGDAAYA",
             "brewbtian",
         },
         [2] = { -- 안개
-            "C4QAi6cZM+HWADeySjzG9Lwx8DAAAAAAAghxyMLjZx2MmZsZstsNjZ2Mz2yyMjFmRzYGwgBDLzMzMMbYGmlZCAAAAgAsYbmlZbmBEAAAYGwYgFZMDA",
+            "C4QAi6cZM+HWADeySjzG9Lwx8DAAAAAAAghxyMLjZx2MmZsYstsMjZ2Mz2yyMjFmRzYGwgBDLzMzMMbwwsMTAAAAAEgFbzsMbzMgAAYAYGwYgFZMDA",
             "ryqim",
         },
         [3] = { -- 풍운
-            "C0QAi6cZM+HWADeySjzG9Lwx8PzYMghZZmZ2mxAAAAAAAAAAAALDzEmhhBMjhZmZGmthZYWmJAgNzsNGGzMDEAbAoZZWamZmFghBmZAglxAGwA",
-            "skriptzy",
+            "C0QAi6cZM+HWADeySjzG9Lwx8PzYMghZZmZ2mxAAAAAAAAAAAALDzEmhhBMjZMzMzwsNMDzyMBAsZmtxwYmZgAYDANLzSzMzsAMMwMDAsMAGwA",
+            "onlydecent",
         },
     },
     ["PALADIN"] = {
         [2] = { -- 보호
-            "CIEAVg1HmQqr1Dwlv86ljju8vuNjBzyYbMjZmZZZMzwsMLDDAwAAAAAAgmmZWmZMzMGmt2AwADYGsBAAmZabmZbmZmttlWmZsYGMAgZYMAYmBAzMgB",
+            "CYEAVg1HmQqr1Dwlv86ljju8vCAAAAAMa22mZmlxMzMAAAAAAmpMLzwMjthHYbYmtZMGjhZsxGAAQmZaZmZbGAwGgBAMzmBmxMzGWmBDjZMYA",
             "yodafotm",
         },
         [3] = { -- 징벌
-            "CYEAVg1HmQqr1Dwlv86ljju8vCAAAAAQz22MzsMGzMAAAAAAGlZbGmZsNMbDzsNjxYMMjN2wAAQmZabmZbGAwGgBAjZYGMzMzshlZwwYYwA",
+            "CYEAVg1HmQqr1Dwlv86ljju8vCAAAAAMaW2mZmlxYmBAAAAAwMlZZGmZsNMbDzsNjxYMMjN2AAAyMTbzMbzAA2AMAGMDDMzMzshlZwwYYwA",
             "melee",
         },
         [1] = { -- 신성
@@ -116,59 +120,59 @@ ItemInfoTalentData = {
         },
     },
     ["PRIEST"] = {
+        [1] = { -- 수양
+            "CAQA4VPTJ8eQb8/qEm8PyGu4yADsAzGjZYmZMbzsNzMzMMDAAAAAAAAAgZYZGMzMDmxMgpZiBYmNMEGzyAMGsAAAjZmZMMzAMzMTzwA",
+            "jinx",
+        },
         [2] = { -- 신성
-            "CEQA4VPTJ8eQb8/qEm8PyGu4ywYAAAAAAgZzwYWGMmZmZMzMjtZmBAAAAjZWmhZmZmhxMD2wMFAzsNz2MTmtZGAmZGsZMzGgmxMPgxgZ2WGYmBMA",
-            "clemenz",
+            "CEQA4VPTJ8eQb8/qEm8PyGu4ywYAAAAAAgZzwYWGMmZmZMzMjlZmBAAAAjZWmZMzMzwMmZAMTNAmZZmtZmMbzMLDwMzgNjZ2A0MmhxgZ2WGMzMgB",
+            "hannavi",
         },
         [3] = { -- 암흑
-            "CIQA4VPTJ8eQb8/qEm8PyGu4yMMjZGAAAAAAAAAAAgxDMbmxYZmhZWmZYY2mZGzMzYDZGLmpBYGgZWMjmNDAZMWAwMAjZmZMbjZ2WGgZwA",
-            "djvildie",
-        },
-        [1] = { -- 수양
-            "CAQA4VPTJ8eQb8/qEm8PyGu4yADsAzGjZYmZMbzsNzMzMMDAAAAAAAAAgxYZGMzMDmxMgpZiBYmNMEGzyAMGsAAAjZmZMMzAMzMTzwA",
-            "jinx",
+            "CIQA4VPTJ8eQb8/qEm8PyGu4yMMjZGAAAAAAAAAAAghZxMGLzMMzyMDjx2MzYmZGbIzYxMNAzAMziZ0sZAIjxCAmxAjZmZMbjZ2WGgZwA",
+            "wildpriestxd",
         },
     },
     ["ROGUE"] = {
+        [1] = { -- 암살
+            "CMQAByFP3pExAEG41/8+e6b8fbmZmZzgBAAAAAmlBbzAAAAAAyyMzMzMzYMzMzsNzyMjHwDMzMzMGmZMGADsAzY0Y2AZbAbGAMzMGD",
+            "woxtoxic",
+        },
         [2] = { -- 무법
-            "CQQAByFP3pExAEG41/8+e6b8fDgZ2mBzMzMzsNzMzMz8AzswDwMbTLD2mBAAAAAYZZmZGmZmZGzMz2AAAAwAYwsNbmZmRzMbMLstNtxCDAmZGYA",
+            "CUQAByFP3pExAEG41/8+e6b8fDgx2MAAAAAwsMGLTMbbjxMjZwDMzMzYMbjZGbbzMzMzMjBjZ2GAAAAGMGwY2MMwAziWoFbYGwMDmxA",
             "tomelvis",
         },
         [3] = { -- 잠행
-            "CMQAByFP3pExAEG41/8+e6b8fbmZmZzgBAAAAAmlBbzAAAAAAyyMzMzMzYMzMzsNzyMjHwDMzMzMGmZMGADsAzY0Y2AZZAbGAMzMGD",
-            "woxtoxic",
-        },
-        [1] = { -- 암살
-            "CMQAByFP3pExAEG41/8+e6b8fbmZmZxgBAAAAAmlBbzAAAAAAabZmZmZmZMmZmZ2mZZmxD4BmZmZGDzMGzA2mZZswYGzSjZbbYy2wwGYmBzMDG",
-            "zerøcool",
+            "CUQAByFP3pExAEG41/8+e6b8fDgx2MAAAAAwsMGLTMbbjxMjZwDMzMzYMbjZGbLzMzMzMjBjZ2GAAAAGMmNzyMmtZYswwyMLTL0yshZYmZmBzYA",
+            "casualaddict",
         },
     },
     ["SHAMAN"] = {
         [1] = { -- 정기
-            "CYQARUG2fGwHkLP0T7/MoTNl/AAAAAzMbbzMzMzMLbbDMmZAAAAAgFzYYDWgZ0QjNAYWmZmxYbx0CzMGLzMzMGWmlZsYmhZWAAGAzMwwwA",
-            "deeprayaa",
-        },
-        [2] = { -- 고양
-            "CcQARUG2fGwHkLP0T7/MoTNl/MzMjZmZmZmZmZmZGzAAAAAAAAAALYZbGzMLLaW2GmhZmGsBwsNjZMWWmBmZ2GLzMzMMWGzAAAMGzImZAGMGA",
-            "drakthul",
+            "CYQARUG2fGwHkLP0T7/MoTNl/AAAAAzMbbzMzYML2mhZMzAAAAAAbmxwGsAzohGbAwsNzMjx2iJMjtxyMzMzMsYZGLmZGzsAAMAmZghhB",
+            "fauni",
         },
         [3] = { -- 복원
-            "CgQARUG2fGwHkLP0T7/MoTNl/AAAAgBAAAAjZmZZbZMzMzYmBDDLwCMjFN2GQmB2YGjZmtZmZ0YZmhZMYZGzMPwwysMDAAzAMzgZGAYwA",
-            "shamrocked",
+            "CYQARUG2fGwHkLP0T7/MoTNl/AAAAAzMbLzMmZmZZbbgxMDAAAAAsYGDbwCMjGasBAzyMzMGbLmwMzyYZmZmxwysMjFzMjZWAAGAzMwwwA",
+            "xhanon",
+        },
+        [2] = { -- 고양
+            "CcQARUG2fGwHkLP0T7/MoTNl/MzMzgZmZmZmhZmZAAAAAAAAAshFstNjZmtFNLbDzwMTDWAY2mxMGLLzAzMbzsMzMzwYZMDAwMMmZYEzMzMYwYA",
+            "shadi",
         },
     },
     ["WARLOCK"] = {
         [1] = { -- 고통
-            "CkQAy0jxIDofkwJmoH7WhvESoxMzMzoZzM2mZGzyAAAmZmlZxMziZAgZZbbMMmFz0YmZYLzCDbDAAAzAAAzMzMjZMGjxMYmZMGmZmBAYGYA",
+            "CkQAy0jxIDofkwJmoH7WhvESoxMzMzoZzM2mZGzyAAAmZmlZzMziZAgZZbbMMmFz0YmZYLzCDbDAAAzAAAzMzMjZMGjxMYmZMGmZmBAYGYA",
             "pigson",
         },
         [2] = { -- 악마
-            "CoQAy0jxIDofkwJmoH7WhvESoxMzMzoZjZ2mZGzyAAAAAAAAGzYYBGYb0GNsYwMLzyMzMmBAmhZmZmZAYGzAAAYmZmZmhxsMjBMA",
-            "lexó",
+            "CoQAy0jxIDofkwJmoH7WhvESoxMjZGNbmZ2mZGzyAAAAAAAAGzYYBGYb0CNsYMzYZ2mZmxMAwMjxMzMDwYGzYDAAMmZmxww2MGwA",
+            "loonyxdd",
         },
         [3] = { -- 파괴
-            "CsQAy0jxIDofkwJmoH7WhvESoxMjZGNbmxmZGzysNzYmFzMLLjBAAzYMzMLWgBmFjGzAY2iNGAAgZYAAwMDGzYmZDAAwMzMDAAzwA",
-            "bloise",
+            "CsQAy0jxIDofkwJmoH7WhvESoxMmZmpZzM2mZGzysZGzsYmZZZMAAYGjZmZxCmZGzssMamZYbYZ2asxAAAjZYAAmZmZwYGjBAAgZmZAAwMM",
+            "jixzy",
         },
     },
     ["WARRIOR"] = {
@@ -176,13 +180,13 @@ ItemInfoTalentData = {
             "CcEAjLzRlq54bI5v+r8Sr9Xw4jZmxsMzMzYGAAAghphxwMbLzMzMjZGzMAAAAAGbmB2iBsZGDLwAzoNaMYBYGMGMbmtBzMAgZmhB",
             "deepps",
         },
-        [2] = { -- 분노
-            "CcEAjLzRlq54bI5v+r8Sr9Xw4jZmxsMzMzYGAAAghphBzMbLzMzMjZGzMAAAAAGbmB2iBsZGDLwAzoNaMYBMzwwgZzsNYmBAYmhB",
-            "farover",
-        },
         [3] = { -- 방어
-            "CkEAjLzRlq54bI5v+r8Sr9Xw4nBAAmZGzMzMzMmNzMLDjxohZGWmZmZGGmZAAAAwyYAmxAMwGssY0YGAzWMzGMjZGMbDAmZAAYGwA",
+            "CkEAjLzRlq54bI5v+r8Sr9Xw4nBAAmZGmZmZmxsZmZZYMGNMzYbZmZmZAzMAAAAYZMAzYAGYDWWMaMDgZLmZDzMmZwsNAYmBAgZAD",
             "acefloorpov",
+        },
+        [2] = { -- 분노
+            "CgEAjLzRlq54bI5v+r8Sr9Xw4DAAAAAAgGDjZMz2yMzMzMmxMjZMjZWmZGjZmlxMzAAAxMLLjNWssYmGzMDTmFmZsAYGMGAMzgZGDzMzgBD",
+            "yükí",
         },
     },
 }

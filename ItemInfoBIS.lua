@@ -62,7 +62,7 @@ ItemInfoBIS.CLASS_LIST = {
 -- 클래스별 특성 이름
 ItemInfoBIS.SPEC_NAMES = {
     ["DEATHKNIGHT"]  = {"혈기", "냉기", "부정"},
-    ["DEMONHUNTER"]  = {"파멸", "복수"},
+    ["DEMONHUNTER"]  = {"파멸", "복수", "포식"},
     ["DRUID"]        = {"조화", "야성", "수호", "회복"},
     ["EVOKER"]       = {"황폐", "보존", "증강"},
     ["HUNTER"]       = {"야수", "사격", "생존"},

@@ -24,7 +24,7 @@ EXTRA_DATA_PATH = PROJECT_DIR / "extra_data.lua"
 
 CLASS_SPECS = [
     ("death-knight", "blood"), ("death-knight", "frost"), ("death-knight", "unholy"),
-    ("demon-hunter", "havoc"), ("demon-hunter", "vengeance"),
+    ("demon-hunter", "havoc"), ("demon-hunter", "vengeance"), ("demon-hunter", "devourer"),
     ("druid", "balance"), ("druid", "feral"), ("druid", "guardian"), ("druid", "restoration"),
     ("evoker", "devastation"), ("evoker", "preservation"), ("evoker", "augmentation"),
     ("hunter", "beast-mastery"), ("hunter", "marksmanship"), ("hunter", "survival"),
@@ -41,7 +41,7 @@ CLASS_SPECS = [
 SLUG_TO_KEY = {
     "death-knight/blood": ("DEATHKNIGHT", 1), "death-knight/frost": ("DEATHKNIGHT", 2),
     "death-knight/unholy": ("DEATHKNIGHT", 3), "demon-hunter/havoc": ("DEMONHUNTER", 1),
-    "demon-hunter/vengeance": ("DEMONHUNTER", 2), "druid/balance": ("DRUID", 1),
+    "demon-hunter/vengeance": ("DEMONHUNTER", 2), "demon-hunter/devourer": ("DEMONHUNTER", 3), "druid/balance": ("DRUID", 1),
     "druid/feral": ("DRUID", 2), "druid/guardian": ("DRUID", 3),
     "druid/restoration": ("DRUID", 4), "evoker/devastation": ("EVOKER", 1),
     "evoker/preservation": ("EVOKER", 2), "evoker/augmentation": ("EVOKER", 3),

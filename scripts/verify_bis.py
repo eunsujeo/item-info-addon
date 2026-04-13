@@ -27,7 +27,7 @@ REQUIRED_SLOTS = {1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16}
 # 클래스별 스펙 수 (검증용)
 CLASS_SPEC_COUNTS = {
     "DEATHKNIGHT": 3,
-    "DEMONHUNTER": 2,
+    "DEMONHUNTER": 3,
     "DRUID": 4,
     "EVOKER": 3,
     "HUNTER": 3,

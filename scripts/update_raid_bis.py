@@ -42,6 +42,7 @@ CLASS_SPECS = {
         "specs": [
             {"index": 1, "slug": "havoc", "name": "파멸"},
             {"index": 2, "slug": "vengeance", "name": "복수"},
+            {"index": 3, "slug": "devourer", "name": "포식"},
         ],
     },
     "DRUID": {
@@ -267,21 +268,22 @@ def parse_source_text(raw: str) -> str:
     return " / ".join(sources) if sources else raw
 
 
-def fetch_spec_raid_bis(class_slug: str, spec_slug: str, session: requests.Session) -> dict:
-    """wowhead에서 특정 스펙의 레이드 BIS 데이터를 가져옵니다.
+def fetch_spec_raid_bis(class_slug: str, spec_slug: str, page) -> dict:
+    """wowhead에서 특정 스펙의 레이드 BIS 데이터를 가져옵니다 (Playwright).
 
     Returns: {slot_id: (item_id, source_str)}
     """
     url = f"https://www.wowhead.com/ko/guide/classes/{class_slug}/{spec_slug}/bis-gear"
 
     try:
-        resp = session.get(url, headers=make_headers(), timeout=20)
-        resp.raise_for_status()
-    except requests.RequestException as e:
+        page.goto(url, wait_until="domcontentloaded", timeout=60000)
+        page.wait_for_timeout(5000)
+        html = page.content()
+    except Exception as e:
         print(f"  x {e}", file=sys.stderr)
         return {}
 
-    soup = BeautifulSoup(resp.text, "html.parser")
+    soup = BeautifulSoup(html, "html.parser")
 
     slots = {}
 
@@ -450,33 +452,39 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Preview only")
     args = parser.parse_args()
 
-    print("--- [1/3] wowhead raid BIS data collection ---")
+    print("--- [1/3] wowhead raid BIS data collection (Playwright) ---")
 
-    session = requests.Session()
+    from playwright.sync_api import sync_playwright
+
     raid_data: dict[str, dict[int, dict[int, tuple]]] = {}
     total_specs = sum(len(c["specs"]) for c in CLASS_SPECS.values())
     count = 0
     fail_count = 0
 
-    for class_id, class_info in CLASS_SPECS.items():
-        raid_data[class_id] = {}
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
 
-        for spec in class_info["specs"]:
-            count += 1
-            label = f"{class_info['name']} - {spec['name']}"
-            print(f"  [{count}/{total_specs}] {label}...", end=" ", flush=True)
+        for class_id, class_info in CLASS_SPECS.items():
+            raid_data[class_id] = {}
 
-            slots = fetch_spec_raid_bis(class_info["slug"], spec["slug"], session)
-            if slots:
-                raid_data[class_id][spec["index"]] = slots
-                print(f"ok {len(slots)} slots")
-            else:
-                print("EMPTY")
-                fail_count += 1
+            for spec in class_info["specs"]:
+                count += 1
+                label = f"{class_info['name']} - {spec['name']}"
+                print(f"  [{count}/{total_specs}] {label}...", end=" ", flush=True)
 
-            # 랜덤 딜레이 (4~8초)
-            delay = random.uniform(4, 8)
-            time.sleep(delay)
+                slots = fetch_spec_raid_bis(class_info["slug"], spec["slug"], page)
+                if slots:
+                    raid_data[class_id][spec["index"]] = slots
+                    print(f"ok {len(slots)} slots")
+                else:
+                    print("EMPTY")
+                    fail_count += 1
+
+                # 랜덤 딜레이 (3~5초)
+                time.sleep(random.uniform(3, 5))
+
+        browser.close()
 
     # 통계
     total_items = sum(

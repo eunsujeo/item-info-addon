@@ -1,6 +1,6 @@
 -- extra_data.lua
 -- 스탯 / 마법부여 / 보석 (archon.gg 기준)
--- 업데이트: 2026-04-09
+-- 업데이트: 2026-04-13
 
 ItemInfoExtraData = {}
 
@@ -17,7 +17,7 @@ ItemInfoExtraData["DEATHKNIGHT"] = {
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
             {slot="발", name="Farstrider's Hunt", id=244009},
-            {slot="반지", name="Nature's Wrath", id=243985},
+            {slot="반지", name="Nature's Fury", id=243987},
         },
         gems = {
             {name="Flawless Masterful Garnet", id=240908},
@@ -105,6 +105,27 @@ ItemInfoExtraData["DEMONHUNTER"] = {
             {name="Indecipherable Eversong Diamond", id=240983},
         },
     },
+    [3] = { -- 포식
+        stats = {"특화", "가속", "치명타", "유연성"},
+        embellishments = {
+            {name="다크문 인장: 사냥", id=245876},
+            {name="비전매듭 안감", id=240167},
+        },
+        enchantments = {
+            {slot="머리", name="Empowered Rune of Avoidance", id=244007},
+            {slot="어깨", name="Amirdrassil's Grace", id=243991},
+            {slot="가슴", name="Mark of the Worldsoul", id=243977},
+            {slot="다리", name="Sunfire Silk Spellthread", id=240133},
+            {slot="발", name="Lynx's Dexterity", id=243953},
+            {slot="반지", name="Zul'jin's Mastery", id=243959},
+            {slot="무기", name="Arcane Mastery", id=244031},
+            {slot="무기", name="Berserker's Rage", id=243973},
+        },
+        gems = {
+            {name="Flawless Quick Amethyst", id=240900},
+            {name="Indecipherable Eversong Diamond", id=240983},
+        },
+    },
 }
 
 ItemInfoExtraData["DRUID"] = {
@@ -156,7 +177,7 @@ ItemInfoExtraData["DRUID"] = {
         },
         enchantments = {
             {slot="머리", name="Hex of Leeching", id=243949},
-            {slot="어깨", name="Thalassian Recovery", id=244019},
+            {slot="어깨", name="Silvermoon's Mending", id=244021},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
             {slot="발", name="Farstrider's Hunt", id=244009},
@@ -329,7 +350,7 @@ ItemInfoExtraData["MAGE"] = {
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Arcanoweave Spellthread", id=240155},
             {slot="발", name="Lynx's Dexterity", id=243953},
-            {slot="반지", name="Amani Mastery", id=243955},
+            {slot="반지", name="Zul'jin's Mastery", id=243959},
             {slot="무기", name="Acuity of the Ren'dorei", id=244029},
         },
         gems = {
@@ -358,7 +379,7 @@ ItemInfoExtraData["MAGE"] = {
         },
     },
     [3] = { -- 냉기
-        stats = {"특화", "치명타", "가속", "유연성"},
+        stats = {"치명타", "특화", "가속", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},
@@ -475,7 +496,7 @@ ItemInfoExtraData["PALADIN"] = {
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
             {slot="발", name="Farstrider's Hunt", id=244009},
-            {slot="반지", name="Thalassian Haste", id=244011},
+            {slot="반지", name="Silvermoon's Alacrity", id=244015},
             {slot="무기", name="Berserker's Rage", id=243973},
         },
         gems = {
@@ -580,8 +601,8 @@ ItemInfoExtraData["ROGUE"] = {
             {slot="어깨", name="Silvermoon's Mending", id=244021},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
-            {slot="발", name="Shaladrassil's Roots", id=243983},
-            {slot="반지", name="Silvermoon's Alacrity", id=244015},
+            {slot="발", name="Lynx's Dexterity", id=243953},
+            {slot="반지", name="Eyes of the Eagle", id=243957},
             {slot="무기", name="Berserker's Rage", id=243973},
         },
         gems = {
@@ -596,7 +617,7 @@ ItemInfoExtraData["ROGUE"] = {
             {name="오색 집중의 눈동자", id=251488},
         },
         enchantments = {
-            {slot="머리", name="Hex of Leeching", id=243949},
+            {slot="머리", name="Empowered Hex of Leeching", id=243951},
             {slot="어깨", name="Silvermoon's Mending", id=244021},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
@@ -685,7 +706,7 @@ ItemInfoExtraData["SHAMAN"] = {
             {slot="가슴", name="Mark of the Magister", id=244003},
             {slot="다리", name="Arcanoweave Spellthread", id=240155},
             {slot="발", name="Shaladrassil's Roots", id=243983},
-            {slot="반지", name="Nature's Wrath", id=243985},
+            {slot="반지", name="Nature's Fury", id=243987},
             {slot="무기", name="Acuity of the Ren'dorei", id=244029},
         },
         gems = {
@@ -703,7 +724,7 @@ ItemInfoExtraData["WARLOCK"] = {
             {name="다크문 인장: 사냥", id=245875},
         },
         enchantments = {
-            {slot="머리", name="Rune of Avoidance", id=244005},
+            {slot="머리", name="Empowered Rune of Avoidance", id=244007},
             {slot="어깨", name="Flight of the Eagle", id=243961},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Sunfire Silk Spellthread", id=240133},
@@ -743,7 +764,7 @@ ItemInfoExtraData["WARLOCK"] = {
             {name="다크문 인장: 사냥", id=245875},
         },
         enchantments = {
-            {slot="머리", name="Rune of Avoidance", id=244005},
+            {slot="머리", name="Empowered Rune of Avoidance", id=244007},
             {slot="어깨", name="Flight of the Eagle", id=243961},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Sunfire Silk Spellthread", id=240133},
@@ -771,7 +792,7 @@ ItemInfoExtraData["WARRIOR"] = {
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Blood Knight's Armor Kit", id=244643},
             {slot="발", name="Lynx's Dexterity", id=243953},
-            {slot="반지", name="Silvermoon's Alacrity", id=244015},
+            {slot="반지", name="Eyes of the Eagle", id=243957},
             {slot="무기", name="Acuity of the Ren'dorei", id=244029},
         },
         gems = {

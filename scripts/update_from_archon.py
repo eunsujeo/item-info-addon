@@ -43,6 +43,7 @@ CLASS_SPECS = {
         "specs": [
             {"index": 1, "slug": "havoc/demon-hunter", "name": "파멸"},
             {"index": 2, "slug": "vengeance/demon-hunter", "name": "복수"},
+            {"index": 3, "slug": "devourer/demon-hunter", "name": "포식"},
         ],
     },
     "DRUID": {
