@@ -507,21 +507,31 @@ local function BuildPanel()
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 
             if self.tooltipData and self.tooltipData.dps then
-                -- 장신구 커스텀 툴팁 (DPS 랭킹)
+                -- 장신구: 보너스 ID 포함 아이템 툴팁 + DPS 랭킹
                 local td = self.tooltipData
                 local meta = ItemInfoTrinketMeta or {}
-                GameTooltip:ClearLines()
-                GameTooltip:AddLine(td.name or "?", 1, 0.82, 0)
-                if meta.ilvl and meta.ilvl > 0 then
-                    GameTooltip:AddLine(string.format("|cffffffff아이템 레벨: |cff00ff00%d|r", meta.ilvl))
+                if self.itemId and self.itemId > 0 then
+                    local link = "item:" .. self.itemId .. "::::::::::::2:12806:13335"
+                    GameTooltip:SetHyperlink(link)
+                    ShoppingTooltip1:Hide()
+                    ShoppingTooltip2:Hide()
+                else
+                    GameTooltip:ClearLines()
+                    GameTooltip:AddLine(td.name or "?", 1, 0.82, 0)
+                end
+                -- 획득처
+                if ItemInfoSourceCache and self.itemId then
+                    local source = ItemInfoSourceCache[self.itemId]
+                    if source then
+                        GameTooltip:AddLine(" ")
+                        GameTooltip:AddLine("|cffffd700획득처:|r " .. source, 1, 1, 1)
+                    end
                 end
                 GameTooltip:AddLine(" ")
                 GameTooltip:AddLine(string.format("|cffffffff시뮬레이션 DPS: |cff00ff00%s|r", td.dps))
                 if td.rank then
                     GameTooltip:AddLine(string.format("|cffffffff랭킹: |cff00ff00%d위|r", td.rank))
                 end
-                GameTooltip:AddLine(" ")
-                GameTooltip:AddLine("|cff888888출처: bloodmallet.com (SimulationCraft)|r")
                 GameTooltip:Show()
             elseif self.tooltipData and self.itemId and self.itemId > 0 then
                 -- 아이템 툴팁 (효과 설명 포함) + 사용 인원수
@@ -996,13 +1006,18 @@ function ItemInfoPanel.Refresh()
             panel.summary:SetText("보석")
         elseif activeTab == "trinkets" then
             RefreshTrinketsTab()
-            panel.summary:SetText("장신구 DPS 랭킹")
+            local meta = ItemInfoTrinketMeta or {}
+            panel.summary:SetText(string.format("장신구 DPS 랭킹 (ilvl %d)", meta.ilvl or 0))
         elseif activeTab == "talents" then
             RefreshTalentsTab()
             panel.summary:SetText("특성 빌드")
         end
 
-        panel.metaText:SetText("쐐기 상위 50명 | " .. ItemInfoBIS.GetUpdateDate())
+        if activeTab == "trinkets" then
+            panel.metaText:SetText("bloodmallet.com | SimulationCraft")
+        else
+            panel.metaText:SetText("쐐기 상위 50명 | " .. ItemInfoBIS.GetUpdateDate())
+        end
     end
 end
 
