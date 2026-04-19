@@ -5,6 +5,7 @@
 -- 힐러/서포터 스펙은 DPS 시뮬레이션 대상 아님
 
 ItemInfoTrinketData = {}
+ItemInfoTrinketMeta = { ilvl = 289, source = "bloodmallet.com", fightStyle = "castingpatchwerk" }
 
 ItemInfoTrinketData["DEATHKNIGHT"] = {
     [1] = { -- 혈기

@@ -509,8 +509,12 @@ local function BuildPanel()
             if self.tooltipData and self.tooltipData.dps then
                 -- 장신구 커스텀 툴팁 (DPS 랭킹)
                 local td = self.tooltipData
+                local meta = ItemInfoTrinketMeta or {}
                 GameTooltip:ClearLines()
                 GameTooltip:AddLine(td.name or "?", 1, 0.82, 0)
+                if meta.ilvl and meta.ilvl > 0 then
+                    GameTooltip:AddLine(string.format("|cffffffff아이템 레벨: |cff00ff00%d|r", meta.ilvl))
+                end
                 GameTooltip:AddLine(" ")
                 GameTooltip:AddLine(string.format("|cffffffff시뮬레이션 DPS: |cff00ff00%s|r", td.dps))
                 if td.rank then

@@ -142,8 +142,10 @@ CLASS_SPECS = {
 FIGHT_STYLE = "castingpatchwerk"
 
 
-def fetch_trinkets(class_slug: str, spec_slug: str, top_n: int = 10) -> list:
-    """bloodmallet API에서 장신구 DPS 랭킹을 가져옵니다."""
+def fetch_trinkets(class_slug: str, spec_slug: str, top_n: int = 10) -> tuple:
+    """bloodmallet API에서 장신구 DPS 랭킹을 가져옵니다.
+    Returns: (trinket_list, max_ilvl)
+    """
     url = f"https://bloodmallet.com/chart/get/trinkets/{FIGHT_STYLE}/{class_slug}/{spec_slug}"
     try:
         resp = requests.get(url, headers=HEADERS, timeout=15)
@@ -151,16 +153,17 @@ def fetch_trinkets(class_slug: str, spec_slug: str, top_n: int = 10) -> list:
         data = resp.json()
     except (requests.RequestException, ValueError) as e:
         print(f"err:{e}", end="")
-        return []
+        return [], 0
 
     items = data.get("data", {})
     item_ids = data.get("item_ids", {})
     steps = data.get("simulated_steps", [])
 
     if not items or not steps:
-        return []
+        return [], 0
 
     max_ilvl = str(max(steps))
+    max_ilvl_num = max(steps)
 
     # DPS 기준 정렬
     ranked = []
@@ -187,10 +190,10 @@ def fetch_trinkets(class_slug: str, spec_slug: str, top_n: int = 10) -> list:
             })
 
     ranked.sort(key=lambda x: x["dps"], reverse=True)
-    return ranked[:top_n]
+    return ranked[:top_n], max_ilvl_num
 
 
-def generate_lua(data: dict, top_n: int) -> str:
+def generate_lua(data: dict, top_n: int, ilvl: int = 0) -> str:
     today = datetime.now().strftime("%Y-%m-%d")
     lines = [
         "-- trinket_data.lua",
@@ -200,6 +203,7 @@ def generate_lua(data: dict, top_n: int) -> str:
         "-- 힐러/서포터 스펙은 DPS 시뮬레이션 대상 아님",
         "",
         "ItemInfoTrinketData = {}",
+        f"ItemInfoTrinketMeta = {{ ilvl = {ilvl}, source = \"bloodmallet.com\", fightStyle = \"{FIGHT_STYLE}\" }}",
         "",
     ]
 
@@ -235,6 +239,7 @@ def main():
     print(f"--- Collecting trinket data from bloodmallet.com (top {args.top}) ---")
 
     data: dict = {}
+    max_ilvl = 0
     total = sum(len(c["specs"]) for c in CLASS_SPECS.values())
     count = 0
 
@@ -243,15 +248,17 @@ def main():
         for spec in class_info["specs"]:
             count += 1
             print(f"  [{count}/{total}] {class_info['name']} {spec['name']}...", end=" ", flush=True)
-            trinkets = fetch_trinkets(class_info["slug"], spec["slug"], args.top)
+            trinkets, ilvl = fetch_trinkets(class_info["slug"], spec["slug"], args.top)
             if trinkets:
                 data[class_id][spec["index"]] = trinkets
-                print(f"ok ({len(trinkets)})")
+                if ilvl > max_ilvl:
+                    max_ilvl = ilvl
+                print(f"ok ({len(trinkets)}, ilvl {ilvl})")
             else:
                 print("EMPTY")
             time.sleep(random.uniform(0.5, 1.5))
 
-    lua = generate_lua(data, args.top)
+    lua = generate_lua(data, args.top, max_ilvl)
 
     if args.dry_run:
         print(lua[:2000])
