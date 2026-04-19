@@ -1,5 +1,5 @@
 -- trinket_data.lua
--- 장신구 DPS 랭킹 (bloodmallet.com, 상위 20개)
+-- 장신구 DPS 랭킹 (bloodmallet.com, 상위 15개)
 -- 시뮬레이션 기준: castingpatchwerk
 -- 업데이트: 2026-04-19
 -- 힐러/서포터 스펙은 DPS 시뮬레이션 대상 아님
@@ -24,11 +24,6 @@ ItemInfoTrinketData["DEATHKNIGHT"] = {
         {name="Magister's Alchemist Stone", id=241340, dps=60728},
         {name="Darkmoon Dominion: Void", id=246307, dps=60685},
         {name="Darkmoon Dominion: Rot", id=246306, dps=60666},
-        {name="Heart of Wind", id=250256, dps=60578},
-        {name="Void Stalker's Contract", id=151307, dps=60441},
-        {name="Gloom-Spattered Dreadscale", id=249339, dps=60382},
-        {name="Latch's Crooked Hook", id=250226, dps=60372},
-        {name="Fiber of Living Agony", id=265657, dps=60371},
     },
     [2] = { -- 냉기
         {name="Gaze of the Alnseer", id=249343, dps=116798},
@@ -46,11 +41,6 @@ ItemInfoTrinketData["DEATHKNIGHT"] = {
         {name="Kroluk's Warbanner", id=250227, dps=112901},
         {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=112844},
         {name="Magister's Alchemist Stone", id=241340, dps=112706},
-        {name="Withered Saptor's Paw", id=251782, dps=112507},
-        {name="Latch's Crooked Hook", id=250226, dps=112468},
-        {name="Mark of Light", id=250241, dps=112451},
-        {name="Dragon Games Equipment", id=193719, dps=112421},
-        {name="Fiber of Living Agony", id=265657, dps=112345},
     },
     [3] = { -- 부정
         {name="Light Company Guidon", id=249344, dps=127186},
@@ -68,11 +58,6 @@ ItemInfoTrinketData["DEATHKNIGHT"] = {
         {name="Glorious Crusader's Keepsake", id=251792, dps=123394},
         {name="Kroluk's Warbanner", id=250227, dps=123379},
         {name="Fiber of Living Agony", id=265657, dps=123375},
-        {name="Dragon Games Equipment", id=193719, dps=123311},
-        {name="Magister's Alchemist Stone", id=241340, dps=123297},
-        {name="Undreamt God's Oozing Vestige", id=249805, dps=123270},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=123261},
-        {name="Drum of Renewed Bonds", id=248583, dps=123083},
     },
 }
 
@@ -93,11 +78,6 @@ ItemInfoTrinketData["DEMONHUNTER"] = {
         {name="Darkmoon Dominion: Void", id=246307, dps=105749},
         {name="Magister's Alchemist Stone", id=241340, dps=105703},
         {name="Crucible of Erratic Energies", id=264507, dps=105699},
-        {name="Light Company Guidon", id=249344, dps=105637},
-        {name="Latch's Crooked Hook", id=250226, dps=105619},
-        {name="Drum of Renewed Bonds", id=248583, dps=105587},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=105576},
-        {name="Fiber of Living Agony", id=265657, dps=105549},
     },
     [2] = { -- 복수
         {name="Gaze of the Alnseer", id=249343, dps=68066},
@@ -115,11 +95,6 @@ ItemInfoTrinketData["DEMONHUNTER"] = {
         {name="Darkmoon Dominion: Void", id=246307, dps=66631},
         {name="Magister's Alchemist Stone", id=241340, dps=66612},
         {name="Emberwing Feather", id=250144, dps=66586},
-        {name="Void-Reaper's Libram", id=251785, dps=66580},
-        {name="Fiber of Living Agony", id=265657, dps=66413},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=66382},
-        {name="Crucible of Erratic Energies", id=264507, dps=66322},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=66316},
     },
     [3] = { -- 포식
         {name="Gaze of the Alnseer", id=249343, dps=101212},
@@ -137,11 +112,6 @@ ItemInfoTrinketData["DEMONHUNTER"] = {
         {name="Crucible of Erratic Energies", id=264507, dps=97753},
         {name="Emberwing Feather", id=250144, dps=97735},
         {name="Drum of Renewed Bonds", id=248583, dps=97629},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=97612},
-        {name="Void-Reaper's Libram", id=251785, dps=97424},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=97193},
-        {name="Vessel of Tortured Souls", id=250258, dps=97093},
-        {name="Eye of the Drowning Void", id=250257, dps=97074},
     },
 }
 
@@ -162,11 +132,6 @@ ItemInfoTrinketData["DRUID"] = {
         {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=105501},
         {name="Glorious Crusader's Keepsake", id=251792, dps=105404},
         {name="Crucible of Erratic Energies", id=264507, dps=105391},
-        {name="Drum of Renewed Bonds", id=248583, dps=105301},
-        {name="Sealed Chaos Urn", id=251787, dps=105075},
-        {name="Ever-Collapsing Void Fissure", id=251786, dps=104913},
-        {name="Eye of the Drowning Void", id=250257, dps=104875},
-        {name="Void-Reaper's Libram", id=251785, dps=104853},
     },
     [2] = { -- 야성
         {name="Algeth'ar Puzzle Box", id=193701, dps=117166},
@@ -184,11 +149,6 @@ ItemInfoTrinketData["DRUID"] = {
         {name="Heart of Wind", id=250256, dps=114067},
         {name="Kroluk's Warbanner", id=250227, dps=113915},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=113799},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=113647},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=113507},
-        {name="Latch's Crooked Hook", id=250226, dps=113329},
-        {name="Drum of Renewed Bonds", id=248583, dps=113312},
-        {name="Crucible of Erratic Energies", id=264507, dps=113280},
     },
     [3] = { -- 수호
         {name="Algeth'ar Puzzle Box", id=193701, dps=85701},
@@ -206,11 +166,6 @@ ItemInfoTrinketData["DRUID"] = {
         {name="Heart of Wind", id=250256, dps=82078},
         {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=82074},
         {name="Kroluk's Warbanner", id=250227, dps=82047},
-        {name="Darkmoon Dominion: Void", id=246307, dps=82031},
-        {name="Void-Reaper's Libram", id=251785, dps=82005},
-        {name="Magister's Alchemist Stone", id=241340, dps=81963},
-        {name="Latch's Crooked Hook", id=250226, dps=81847},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=81793},
     },
 }
 
@@ -231,11 +186,6 @@ ItemInfoTrinketData["EVOKER"] = {
         {name="Crucible of Erratic Energies", id=264507, dps=105377},
         {name="Heart of Wind", id=250256, dps=105343},
         {name="Drum of Renewed Bonds", id=248583, dps=105312},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=105148},
-        {name="Wraps of Cosmic Madness", id=249340, dps=105002},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=104928},
-        {name="Void-Reaper's Libram", id=251785, dps=104903},
-        {name="Nevermelting Ice Crystal", id=50259, dps=104736},
     },
 }
 
@@ -256,11 +206,6 @@ ItemInfoTrinketData["HUNTER"] = {
         {name="Heart of Wind", id=250256, dps=107876},
         {name="Glorious Crusader's Keepsake", id=251792, dps=107527},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=107474},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=107318},
-        {name="Crucible of Erratic Energies", id=264507, dps=107274},
-        {name="Sealed Chaos Urn", id=251787, dps=107274},
-        {name="Drum of Renewed Bonds", id=248583, dps=107272},
-        {name="Fiber of Living Agony", id=265657, dps=107224},
     },
     [2] = { -- 사격
         {name="Algeth'ar Puzzle Box", id=193701, dps=105491},
@@ -278,11 +223,6 @@ ItemInfoTrinketData["HUNTER"] = {
         {name="Darkmoon Dominion: Void", id=246307, dps=100776},
         {name="Magister's Alchemist Stone", id=241340, dps=100730},
         {name="Heart of Wind", id=250256, dps=100301},
-        {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=100252},
-        {name="Crucible of Erratic Energies", id=264507, dps=100208},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=100190},
-        {name="Fiber of Living Agony", id=265657, dps=100187},
-        {name="Drum of Renewed Bonds", id=248583, dps=100184},
     },
     [3] = { -- 생존
         {name="Algeth'ar Puzzle Box", id=193701, dps=105919},
@@ -300,11 +240,6 @@ ItemInfoTrinketData["HUNTER"] = {
         {name="Glorious Crusader's Keepsake", id=251792, dps=103556},
         {name="Magister's Alchemist Stone", id=241340, dps=103549},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=103246},
-        {name="Kroluk's Warbanner", id=250227, dps=103224},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=103175},
-        {name="Fiber of Living Agony", id=265657, dps=103149},
-        {name="Crucible of Erratic Energies", id=264507, dps=103073},
-        {name="Drum of Renewed Bonds", id=248583, dps=103059},
     },
 }
 
@@ -325,11 +260,6 @@ ItemInfoTrinketData["MAGE"] = {
         {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=94833},
         {name="Drum of Renewed Bonds", id=248583, dps=94830},
         {name="Heart of Wind", id=250256, dps=94793},
-        {name="Crucible of Erratic Energies", id=264507, dps=94735},
-        {name="Void-Reaper's Libram", id=251785, dps=94600},
-        {name="Eye of the Drowning Void", id=250257, dps=94596},
-        {name="Reality Breacher", id=151310, dps=94442},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=94367},
     },
     [2] = { -- 화염
         {name="Emberwing Feather", id=250144, dps=99765},
@@ -347,11 +277,6 @@ ItemInfoTrinketData["MAGE"] = {
         {name="Darkmoon Dominion: Blood", id=246305, dps=96634},
         {name="Glorious Crusader's Keepsake", id=251792, dps=96455},
         {name="Galactic Gladiator's Insignia of Alacrity", id=255614, dps=96434},
-        {name="Eye of the Drowning Void", id=250257, dps=96313},
-        {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=96241},
-        {name="Reality Breacher", id=151310, dps=96187},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=96164},
-        {name="Void-Reaper's Libram", id=251785, dps=96105},
     },
     [3] = { -- 냉기
         {name="Gaze of the Alnseer", id=249343, dps=108821},
@@ -369,11 +294,6 @@ ItemInfoTrinketData["MAGE"] = {
         {name="Heart of Wind", id=250256, dps=106090},
         {name="Glorious Crusader's Keepsake", id=251792, dps=105977},
         {name="Drum of Renewed Bonds", id=248583, dps=105953},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=105574},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=105450},
-        {name="Void-Reaper's Libram", id=251785, dps=105324},
-        {name="Wraps of Cosmic Madness", id=249340, dps=105099},
-        {name="Reality Breacher", id=151310, dps=105091},
     },
 }
 
@@ -394,11 +314,6 @@ ItemInfoTrinketData["MONK"] = {
         {name="Crucible of Erratic Energies", id=264507, dps=75390},
         {name="Glorious Crusader's Keepsake", id=251792, dps=75356},
         {name="Algeth'ar Puzzle Box", id=193701, dps=75279},
-        {name="Drum of Renewed Bonds", id=248583, dps=75268},
-        {name="Fiber of Living Agony", id=265657, dps=75227},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=75223},
-        {name="Void-Reaper's Libram", id=251785, dps=75223},
-        {name="Gloom-Spattered Dreadscale", id=249339, dps=75175},
     },
     [3] = { -- 풍운
         {name="Algeth'ar Puzzle Box", id=193701, dps=109618},
@@ -416,11 +331,6 @@ ItemInfoTrinketData["MONK"] = {
         {name="Crucible of Erratic Energies", id=264507, dps=106096},
         {name="Fiber of Living Agony", id=265657, dps=106076},
         {name="Drum of Renewed Bonds", id=248583, dps=105994},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=105993},
-        {name="Latch's Crooked Hook", id=250226, dps=105892},
-        {name="Void-Reaper's Libram", id=251785, dps=105809},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=105807},
-        {name="Magister's Alchemist Stone", id=241340, dps=105770},
     },
 }
 
@@ -441,11 +351,6 @@ ItemInfoTrinketData["PALADIN"] = {
         {name="Magister's Alchemist Stone", id=241340, dps=70352},
         {name="Kroluk's Warbanner", id=250227, dps=70292},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=70138},
-        {name="Heart of Wind", id=250256, dps=70100},
-        {name="Void Stalker's Contract", id=151307, dps=69914},
-        {name="Fiber of Living Agony", id=265657, dps=69912},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=69877},
-        {name="Drum of Renewed Bonds", id=248583, dps=69856},
     },
     [3] = { -- 징벌
         {name="Algeth'ar Puzzle Box", id=193701, dps=110993},
@@ -463,11 +368,6 @@ ItemInfoTrinketData["PALADIN"] = {
         {name="Darkmoon Dominion: Void", id=246307, dps=107480},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=107442},
         {name="Glorious Crusader's Keepsake", id=251792, dps=107288},
-        {name="Crucible of Erratic Energies", id=264507, dps=107222},
-        {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=107199},
-        {name="Fiber of Living Agony", id=265657, dps=107164},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=107011},
-        {name="Drum of Renewed Bonds", id=248583, dps=107010},
     },
 }
 
@@ -488,11 +388,6 @@ ItemInfoTrinketData["PRIEST"] = {
         {name="Vessel of Tortured Souls", id=250258, dps=99239},
         {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=99074},
         {name="Crucible of Erratic Energies", id=264507, dps=99012},
-        {name="Drum of Renewed Bonds", id=248583, dps=98930},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=98838},
-        {name="Void-Reaper's Libram", id=251785, dps=98686},
-        {name="Eye of the Drowning Void", id=250257, dps=98495},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=98470},
     },
 }
 
@@ -513,11 +408,6 @@ ItemInfoTrinketData["ROGUE"] = {
         {name="Heart of Wind", id=250256, dps=97769},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=97690},
         {name="Magister's Alchemist Stone", id=241340, dps=97626},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=97358},
-        {name="Crucible of Erratic Energies", id=264507, dps=97326},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=97326},
-        {name="Fiber of Living Agony", id=265657, dps=97255},
-        {name="Latch's Crooked Hook", id=250226, dps=97206},
     },
     [2] = { -- 무법
         {name="Gaze of the Alnseer", id=249343, dps=109468},
@@ -535,11 +425,6 @@ ItemInfoTrinketData["ROGUE"] = {
         {name="Darkmoon Dominion: Blood", id=246305, dps=107093},
         {name="Latch's Crooked Hook", id=250226, dps=107088},
         {name="Emberwing Feather", id=250144, dps=107040},
-        {name="Fiber of Living Agony", id=265657, dps=107012},
-        {name="Crucible of Erratic Energies", id=264507, dps=106984},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=106974},
-        {name="Drum of Renewed Bonds", id=248583, dps=106915},
-        {name="Eye of the Drowning Void", id=250257, dps=106735},
     },
     [3] = { -- 잠행
         {name="Light Company Guidon", id=249344, dps=105221},
@@ -557,11 +442,6 @@ ItemInfoTrinketData["ROGUE"] = {
         {name="Undreamt God's Oozing Vestige", id=249805, dps=102665},
         {name="Solarflare Prism", id=252420, dps=102581},
         {name="Heart of Wind", id=250256, dps=102423},
-        {name="Latch's Crooked Hook", id=250226, dps=102410},
-        {name="Eye of the Drowning Void", id=250257, dps=102143},
-        {name="Void Stalker's Contract", id=151307, dps=102073},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=102005},
-        {name="Fiber of Living Agony", id=265657, dps=101927},
     },
 }
 
@@ -582,11 +462,6 @@ ItemInfoTrinketData["SHAMAN"] = {
         {name="Crucible of Erratic Energies", id=264507, dps=121110},
         {name="Drum of Renewed Bonds", id=248583, dps=121038},
         {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=120947},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=120927},
-        {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=120843},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=120493},
-        {name="Ever-Collapsing Void Fissure", id=251786, dps=120351},
-        {name="Nevermelting Ice Crystal", id=50259, dps=120344},
     },
     [2] = { -- 고양
         {name="Algeth'ar Puzzle Box", id=193701, dps=101995},
@@ -604,11 +479,6 @@ ItemInfoTrinketData["SHAMAN"] = {
         {name="Magister's Alchemist Stone", id=241340, dps=99231},
         {name="Darkmoon Dominion: Void", id=246307, dps=99209},
         {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=99114},
-        {name="Kroluk's Warbanner", id=250227, dps=99071},
-        {name="Withered Saptor's Paw", id=251782, dps=98960},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=98916},
-        {name="Undreamt God's Oozing Vestige", id=249805, dps=98855},
-        {name="Crucible of Erratic Energies", id=264507, dps=98833},
     },
 }
 
@@ -629,11 +499,6 @@ ItemInfoTrinketData["WARLOCK"] = {
         {name="Darkmoon Dominion: Blood", id=246305, dps=102500},
         {name="Crucible of Erratic Energies", id=264507, dps=102386},
         {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=102328},
-        {name="Void-Reaper's Libram", id=251785, dps=102259},
-        {name="Drum of Renewed Bonds", id=248583, dps=102223},
-        {name="Reality Breacher", id=151310, dps=102063},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=101953},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=101919},
     },
     [2] = { -- 악마
         {name="Emberwing Feather", id=250144, dps=115270},
@@ -651,11 +516,6 @@ ItemInfoTrinketData["WARLOCK"] = {
         {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=112762},
         {name="Crucible of Erratic Energies", id=264507, dps=112544},
         {name="Glorious Crusader's Keepsake", id=251792, dps=112499},
-        {name="Drum of Renewed Bonds", id=248583, dps=112416},
-        {name="Wraps of Cosmic Madness", id=249340, dps=112158},
-        {name="Ever-Collapsing Void Fissure", id=251786, dps=112091},
-        {name="Forgotten Farstrider's Insignia", id=250462, dps=112065},
-        {name="Galactic Gladiator's Badge of Ferocity", id=255613, dps=111718},
     },
     [3] = { -- 파괴
         {name="Gaze of the Alnseer", id=249343, dps=106719},
@@ -673,11 +533,6 @@ ItemInfoTrinketData["WARLOCK"] = {
         {name="Wraps of Cosmic Madness", id=249340, dps=104482},
         {name="Crucible of Erratic Energies", id=264507, dps=104404},
         {name="Drum of Renewed Bonds", id=248583, dps=104379},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=104363},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=104252},
-        {name="Void-Reaper's Libram", id=251785, dps=104093},
-        {name="Eye of the Drowning Void", id=250257, dps=104088},
-        {name="Reality Breacher", id=151310, dps=103950},
     },
 }
 
@@ -698,11 +553,6 @@ ItemInfoTrinketData["WARRIOR"] = {
         {name="Magister's Alchemist Stone", id=241340, dps=97378},
         {name="Darkmoon Dominion: Void", id=246307, dps=97374},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=97354},
-        {name="Crucible of Erratic Energies", id=264507, dps=97308},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=97084},
-        {name="Fiber of Living Agony", id=265657, dps=97067},
-        {name="Drum of Renewed Bonds", id=248583, dps=97050},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=96997},
     },
     [2] = { -- 분노
         {name="Gaze of the Alnseer", id=249343, dps=105242},
@@ -720,11 +570,6 @@ ItemInfoTrinketData["WARRIOR"] = {
         {name="Heart of Wind", id=250256, dps=102984},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=102935},
         {name="Dragon Games Equipment", id=193719, dps=102931},
-        {name="Crucible of Erratic Energies", id=264507, dps=102709},
-        {name="Drum of Renewed Bonds", id=248583, dps=102685},
-        {name="Glorious Crusader's Keepsake", id=251792, dps=102652},
-        {name="Thalassian Competitor's Insignia of Alacrity", id=245752, dps=102645},
-        {name="Fiber of Living Agony", id=265657, dps=102637},
     },
     [3] = { -- 방어
         {name="Gaze of the Alnseer", id=249343, dps=73631},
@@ -742,10 +587,5 @@ ItemInfoTrinketData["WARRIOR"] = {
         {name="Magister's Alchemist Stone", id=241340, dps=72248},
         {name="Undreamt God's Oozing Vestige", id=249805, dps=72224},
         {name="Light Company Guidon", id=249344, dps=72111},
-        {name="Drum of Renewed Bonds", id=248583, dps=71920},
-        {name="Fiber of Living Agony", id=265657, dps=71906},
-        {name="Darkmoon Dominion: Rot", id=246306, dps=71905},
-        {name="Crucible of Erratic Energies", id=264507, dps=71904},
-        {name="Void Stalker's Contract", id=151307, dps=71892},
     },
 }

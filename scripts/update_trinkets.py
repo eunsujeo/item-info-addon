@@ -233,7 +233,7 @@ def generate_lua(data: dict, top_n: int, ilvl: int = 0) -> str:
 def main():
     parser = argparse.ArgumentParser(description="bloodmallet trinket ranking collector")
     parser.add_argument("--dry-run", action="store_true")
-    parser.add_argument("--top", type=int, default=20, help="Top N trinkets per spec")
+    parser.add_argument("--top", type=int, default=15, help="Top N trinkets per spec")
     args = parser.parse_args()
 
     print(f"--- Collecting trinket data from bloodmallet.com (top {args.top}) ---")
