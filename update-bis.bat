@@ -74,21 +74,27 @@ if errorlevel 1 (
     echo [10] FAILED - continuing
 )
 
-echo --- [11/12] Talents from murlok.io (Playwright)...
+echo --- [11/13] Talents from murlok.io (Playwright)...
 "%PYTHON%" scripts\update_talents.py
 if errorlevel 1 (
     echo [11] FAILED - continuing without talent update
+)
+
+echo --- [12/13] Trinkets from bloodmallet.com...
+"%PYTHON%" scripts\update_trinkets.py
+if errorlevel 1 (
+    echo [12] FAILED - continuing without trinket update
 )
 
 if "%1"=="--extra-only" goto verify
 
 :apply
 if "%1"=="--skip-fetch" (
-    echo --- [1-11] Skipped (--skip-fetch)
+    echo --- [1-12] Skipped (--skip-fetch)
 )
 
 :verify
-echo --- [12/12] Final verification...
+echo --- [13/13] Final verification...
 "%PYTHON%" scripts\verify_all.py
 if errorlevel 1 (
     echo WARNING: Some verifications failed. Check output above.
@@ -99,6 +105,7 @@ if not exist "%WOW_ADDON_DIR%" mkdir "%WOW_ADDON_DIR%"
 copy /y bis_data.lua "%WOW_ADDON_DIR%\" >nul
 copy /y talent_data.lua "%WOW_ADDON_DIR%\" >nul
 copy /y extra_data.lua "%WOW_ADDON_DIR%\" >nul
+copy /y trinket_data.lua "%WOW_ADDON_DIR%\" >nul
 copy /y item_sources.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfoBIS.lua "%WOW_ADDON_DIR%\" >nul
 copy /y ItemInfoPanel.lua "%WOW_ADDON_DIR%\" >nul

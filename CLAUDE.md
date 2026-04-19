@@ -7,10 +7,11 @@ WoW(World of Warcraft) 리테일 애드온. 현재 스펙의 쐐기(M+) 상위 5
 ### 애드온 파일 (Lua)
 - `ItemInfo.lua` - 메인: 이벤트 등록, 슬래시 커맨드 (`/ii`)
 - `ItemInfoBIS.lua` - BIS 로직: 데이터 로드, 슬롯 상태 판정, 툴팁 훅
-- `ItemInfoPanel.lua` - UI 패널: 7탭(BiS/장비/스탯/장식/마부/보석/특성), 드롭다운, 툴팁
+- `ItemInfoPanel.lua` - UI 패널: 8탭(BiS/장비/스탯/장식/마부/보석/장신구/특성), 드롭다운, 툴팁
 - `bis_data.lua` - 장비 데이터 (M+ + 레이드)
 - `extra_data.lua` - 스탯/장식/마법부여/보석 데이터
 - `talent_data.lua` - 특성 빌드 문자열
+- `trinket_data.lua` - 장신구 DPS 랭킹 (bloodmallet.com)
 - `item_sources.lua` - 아이템 획득처 캐시
 
 ### 데이터 수집 스크립트 (Python)
