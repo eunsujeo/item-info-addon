@@ -161,7 +161,7 @@ SLOT_MAP = {
     "feet": 8, "boots": 8, "발": 8,
     "ring": 11, "ring 1": 11, "ring 2": 12, "반지": 11, "반지 1": 11, "반지 2": 12,
     "trinket": 13, "trinket 1": 13, "trinket 2": 14, "장신구": 13, "장신구 1": 13, "장신구 2": 14,
-    "main hand": 16, "weapon": 16, "1h weapon": 16, "2h weapon": 16, "주무기": 16,
+    "main hand": 16, "mainhand": 16, "weapon": 16, "1h weapon": 16, "2h weapon": 16, "주무기": 16,
     "off hand": 17, "offhand": 17, "shield": 17, "보조무기": 17,
 }
 
@@ -300,7 +300,6 @@ def fetch_spec_raid_bis(class_slug: str, spec_slug: str, page) -> dict:
             slot_text = cells[0].get_text(strip=True).lower()
             slot_id = SLOT_MAP.get(slot_text)
             if slot_id is None:
-                # 부분 매칭
                 for key, sid in SLOT_MAP.items():
                     if key in slot_text:
                         slot_id = sid
@@ -308,8 +307,8 @@ def fetch_spec_raid_bis(class_slug: str, spec_slug: str, page) -> dict:
             if slot_id is None:
                 continue
 
-            # 두 번째 셀: 아이템 링크
-            item_link = cells[1].find("a", href=re.compile(r"item=\d+"))
+            # 행 전체에서 아이템 링크 찾기 (빈 셀이 끼어있을 수 있음)
+            item_link = row.find("a", href=re.compile(r"item=\d+"))
             if not item_link:
                 continue
 
@@ -318,10 +317,10 @@ def fetch_spec_raid_bis(class_slug: str, spec_slug: str, page) -> dict:
                 continue
             item_id = int(item_match.group(1))
 
-            # 세 번째 셀: 소스 (있으면)
+            # 마지막 셀: 소스
             source = ""
-            if len(cells) >= 3:
-                source = parse_source_text(cells[2].get_text(strip=True))
+            last_cell = cells[-1]
+            source = parse_source_text(last_cell.get_text(strip=True))
 
             # Ring/Trinket 복수 슬롯 처리
             if slot_id in (11, 13) and slot_id in slots:
