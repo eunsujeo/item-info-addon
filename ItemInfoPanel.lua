@@ -4,7 +4,7 @@
 ItemInfoPanel = {}
 
 -- 상수
-local PANEL_WIDTH   = 300
+local PANEL_WIDTH   = 340
 local ROW_HEIGHT    = 22
 local HEADER_HEIGHT = 76
 local FOOTER_HEIGHT = 40
@@ -506,7 +506,20 @@ local function BuildPanel()
             ItemInfoBIS.panelTooltipActive = true
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 
-            if self.tooltipData and self.itemId and self.itemId > 0 then
+            if self.tooltipData and self.tooltipData.dps then
+                -- 장신구 커스텀 툴팁 (DPS 랭킹)
+                local td = self.tooltipData
+                GameTooltip:ClearLines()
+                GameTooltip:AddLine(td.name or "?", 1, 0.82, 0)
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine(string.format("|cffffffff시뮬레이션 DPS: |cff00ff00%s|r", td.dps))
+                if td.rank then
+                    GameTooltip:AddLine(string.format("|cffffffff랭킹: |cff00ff00%d위|r", td.rank))
+                end
+                GameTooltip:AddLine(" ")
+                GameTooltip:AddLine("|cff888888출처: bloodmallet.com (SimulationCraft)|r")
+                GameTooltip:Show()
+            elseif self.tooltipData and self.itemId and self.itemId > 0 then
                 -- 아이템 툴팁 (효과 설명 포함) + 사용 인원수
                 GameTooltip:SetHyperlink("item:" .. self.itemId)
                 ShoppingTooltip1:Hide()
@@ -821,7 +834,7 @@ local function RefreshTrinketsTab()
     local vc, vs = ItemInfoBIS.GetViewingClassSpec()
     local line = 1
 
-    SetInfoLine(line, "|cffffd700장신구 DPS 랭킹|r", 1, 0.84, 0)
+    SetInfoLine(line, "|cffffd700장신구 시뮬레이션 DPS 랭킹|r", 1, 0.84, 0)
     line = line + 1
 
     if not vc or not vs or not ItemInfoTrinketData then
@@ -836,10 +849,27 @@ local function RefreshTrinketsTab()
         return
     end
 
-    for _, trinket in ipairs(cd[vs]) do
+    for rank, trinket in ipairs(cd[vs]) do
         if line > #infoLines then break end
-        local dpsStr = string.format("%s DPS", trinket.dps and string.format("%.0f", trinket.dps) or "?")
-        SetInfoItemLine(line, trinket.name or "?", trinket.id or 0, dpsStr)
+        local itemId = trinket.id or 0
+        local dps = trinket.dps or 0
+
+        -- 한글 이름은 GetItemInfo에서 가져오기
+        local koName = nil
+        if itemId > 0 then
+            koName = GetItemInfo(itemId)
+            C_Item.RequestLoadItemDataByID(itemId)
+        end
+        local displayName = koName or trinket.name or "?"
+        local dpsStr = string.format("|cff888888%s DPS|r", dps)
+
+        -- 커스텀 툴팁 데이터 (아이템 툴팁 대신)
+        local tooltipData = {
+            name = displayName,
+            dps = dps,
+            rank = rank,
+        }
+        SetInfoItemLine(line, "", displayName .. "  " .. dpsStr, itemId, tooltipData)
         line = line + 1
     end
 end
