@@ -495,9 +495,15 @@ local function BuildPanel()
         row.tooltipData = nil  -- {name, count, slot} 커스텀 툴팁용
         row:SetScript("OnMouseUp", function(self)
             if IsModifiedClick("CHATLINK") and self.itemId and self.itemId > 0 then
-                local _, itemLink = GetItemInfo(self.itemId)
+                -- 보너스 ID 포함 링크 생성
+                local link = "item:" .. self.itemId .. "::::::::::::2:12806:13335"
+                local _, itemLink = GetItemInfo(link)
                 if itemLink then
                     HandleModifiedItemClick(itemLink)
+                else
+                    -- 폴백: 기본 링크
+                    local _, baseLink = GetItemInfo(self.itemId)
+                    if baseLink then HandleModifiedItemClick(baseLink) end
                 end
             end
         end)
