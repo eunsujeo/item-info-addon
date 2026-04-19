@@ -20,6 +20,7 @@ local TABS = {
     {id = "embels",   name = "장식"},
     {id = "enchants", name = "마부"},
     {id = "gems",     name = "보석"},
+    {id = "trinkets", name = "장신구"},
     {id = "talents",  name = "특성"},
 }
 
@@ -815,6 +816,34 @@ local function RefreshGemsTab()
     end
 end
 
+local function RefreshTrinketsTab()
+    ClearInfoLines()
+    local vc, vs = ItemInfoBIS.GetViewingClassSpec()
+    local line = 1
+
+    SetInfoLine(line, "|cffffd700장신구 DPS 랭킹|r", 1, 0.84, 0)
+    line = line + 1
+
+    if not vc or not vs or not ItemInfoTrinketData then
+        SetInfoLine(line, "  |cff888888데이터 없음|r")
+        return
+    end
+
+    local cd = ItemInfoTrinketData[vc]
+    if not cd or not cd[vs] then
+        SetInfoLine(line, "  |cff888888이 스펙의 장신구 데이터가 없습니다.|r")
+        SetInfoLine(line + 1, "  |cff888888(힐러/서포터 스펙은 미지원)|r")
+        return
+    end
+
+    for _, trinket in ipairs(cd[vs]) do
+        if line > #infoLines then break end
+        local dpsStr = string.format("%s DPS", trinket.dps and string.format("%.0f", trinket.dps) or "?")
+        SetInfoItemLine(line, trinket.name or "?", trinket.id or 0, dpsStr)
+        line = line + 1
+    end
+end
+
 local function RefreshTalentsTab()
     ClearInfoLines()
     local vc, vs = ItemInfoBIS.GetViewingClassSpec()
@@ -931,6 +960,9 @@ function ItemInfoPanel.Refresh()
         elseif activeTab == "gems" then
             RefreshGemsTab()
             panel.summary:SetText("보석")
+        elseif activeTab == "trinkets" then
+            RefreshTrinketsTab()
+            panel.summary:SetText("장신구 DPS 랭킹")
         elseif activeTab == "talents" then
             RefreshTalentsTab()
             panel.summary:SetText("특성 빌드")
