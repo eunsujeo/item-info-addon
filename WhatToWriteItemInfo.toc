@@ -10,6 +10,7 @@ bis_data.lua
 talent_data.lua
 extra_data.lua
 trinket_data.lua
+meta_data.lua
 item_sources.lua
 ItemInfoBIS.lua
 ItemInfoPanel.lua

@@ -22,6 +22,7 @@ local TABS = {
     {id = "gems",     name = "보석"},
     {id = "trinkets", name = "장신구"},
     {id = "talents",  name = "특성"},
+    {id = "meta",     name = "순위"},
 }
 
 -- 상태 색상
@@ -894,6 +895,51 @@ local function RefreshTrinketsTab()
     end
 end
 
+-- 클래스 색상 (WoW 표준)
+local CLASS_COLOR = {
+    DEATHKNIGHT={r=0.77,g=0.12,b=0.23}, DEMONHUNTER={r=0.64,g=0.19,b=0.79},
+    DRUID={r=1.00,g=0.49,b=0.04},       EVOKER={r=0.20,g=0.58,b=0.50},
+    HUNTER={r=0.67,g=0.83,b=0.45},      MAGE={r=0.25,g=0.78,b=0.92},
+    MONK={r=0.00,g=1.00,b=0.59},        PALADIN={r=0.96,g=0.55,b=0.73},
+    PRIEST={r=1.00,g=1.00,b=1.00},      ROGUE={r=1.00,g=0.96,b=0.41},
+    SHAMAN={r=0.00,g=0.44,b=0.87},      WARLOCK={r=0.53,g=0.53,b=0.93},
+    WARRIOR={r=0.78,g=0.61,b=0.43},
+}
+
+local function RefreshMetaTab()
+    ClearInfoLines()
+    local line = 1
+
+    SetInfoLine(line, "|cffffd700쐐기 메타 순위|r (DPS / 힐러 / 탱커)", 1, 0.84, 0)
+    line = line + 1
+
+    if not ItemInfoMetaData then
+        SetInfoLine(line, "  |cff888888데이터 없음|r")
+        return
+    end
+
+    local ROLE_LABELS = {dps="DPS", healer="힐러", tank="탱커"}
+    for _, role in ipairs({"dps", "healer", "tank"}) do
+        local rankings = ItemInfoMetaData[role] or {}
+        if #rankings > 0 and line <= #infoLines then
+            SetInfoLine(line, "|cff00aaff▼ " .. ROLE_LABELS[role] .. "|r", 0, 0.67, 1)
+            line = line + 1
+            for _, r in ipairs(rankings) do
+                if line > #infoLines then break end
+                local color = CLASS_COLOR[r.classId] or {r=1,g=1,b=1}
+                local hex = string.format("|cff%02x%02x%02x", color.r*255, color.g*255, color.b*255)
+                local specNames = ItemInfoBIS.SPEC_NAMES[r.classId] or {}
+                local className = ItemInfoBIS.GetClassName(r.classId) or r.classId
+                local specName = specNames[r.specIndex] or "?"
+                local text = string.format("  %d. %s%s %s|r  |cff888888%d|r",
+                    r.rank, hex, specName, className, r.score)
+                SetInfoLine(line, text)
+                line = line + 1
+            end
+        end
+    end
+end
+
 local function RefreshTalentsTab()
     ClearInfoLines()
     local vc, vs = ItemInfoBIS.GetViewingClassSpec()
@@ -1017,10 +1063,15 @@ function ItemInfoPanel.Refresh()
         elseif activeTab == "talents" then
             RefreshTalentsTab()
             panel.summary:SetText("특성 빌드")
+        elseif activeTab == "meta" then
+            RefreshMetaTab()
+            panel.summary:SetText("쐐기 메타 순위")
         end
 
         if activeTab == "trinkets" then
             panel.metaText:SetText("bloodmallet.com | SimulationCraft")
+        elseif activeTab == "meta" then
+            panel.metaText:SetText("murlok.io 쐐기 메타 | 상위 50명 점수 기준")
         else
             panel.metaText:SetText("쐐기 상위 50명 | " .. ItemInfoBIS.GetUpdateDate())
         end

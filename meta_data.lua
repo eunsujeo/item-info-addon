@@ -1,0 +1,52 @@
+-- meta_data.lua
+-- 쐐기 메타 랭킹 (murlok.io 상위 50명 기준)
+-- 업데이트: 2026-04-23
+
+ItemInfoMetaData = {
+    dps = {
+        {rank=1, classId="EVOKER", specIndex=3, score=3832, nameEn="Augmentation Evoker"},
+        {rank=2, classId="DEATHKNIGHT", specIndex=3, score=3813, nameEn="Unholy Death Knight"},
+        {rank=3, classId="DEMONHUNTER", specIndex=3, score=3811, nameEn="Devourer Demon Hunter"},
+        {rank=4, classId="WARLOCK", specIndex=2, score=3806, nameEn="Demonology Warlock"},
+        {rank=5, classId="PALADIN", specIndex=3, score=3780, nameEn="Retribution Paladin"},
+        {rank=6, classId="WARRIOR", specIndex=1, score=3749, nameEn="Arms Warrior"},
+        {rank=7, classId="SHAMAN", specIndex=1, score=3731, nameEn="Elemental Shaman"},
+        {rank=8, classId="DRUID", specIndex=2, score=3721, nameEn="Feral Druid"},
+        {rank=9, classId="MAGE", specIndex=3, score=3694, nameEn="Frost Mage"},
+        {rank=10, classId="PRIEST", specIndex=3, score=3683, nameEn="Shadow Priest"},
+        {rank=11, classId="HUNTER", specIndex=2, score=3661, nameEn="Marksmanship Hunter"},
+        {rank=12, classId="HUNTER", specIndex=1, score=3649, nameEn="Beast Mastery Hunter"},
+        {rank=13, classId="ROGUE", specIndex=1, score=3645, nameEn="Assassination Rogue"},
+        {rank=14, classId="DRUID", specIndex=1, score=3641, nameEn="Balance Druid"},
+        {rank=15, classId="WARRIOR", specIndex=2, score=3628, nameEn="Fury Warrior"},
+        {rank=16, classId="SHAMAN", specIndex=2, score=3582, nameEn="Enhancement Shaman"},
+        {rank=17, classId="HUNTER", specIndex=3, score=3579, nameEn="Survival Hunter"},
+        {rank=18, classId="ROGUE", specIndex=3, score=3569, nameEn="Subtlety Rogue"},
+        {rank=19, classId="DEMONHUNTER", specIndex=1, score=3566, nameEn="Havoc Demon Hunter"},
+        {rank=20, classId="MONK", specIndex=3, score=3558, nameEn="Windwalker Monk"},
+        {rank=21, classId="ROGUE", specIndex=2, score=3535, nameEn="Outlaw Rogue"},
+        {rank=22, classId="EVOKER", specIndex=1, score=3448, nameEn="Devastation Evoker"},
+        {rank=23, classId="WARLOCK", specIndex=1, score=3409, nameEn="Affliction Warlock"},
+        {rank=24, classId="MAGE", specIndex=1, score=3404, nameEn="Arcane Mage"},
+        {rank=25, classId="WARLOCK", specIndex=3, score=3372, nameEn="Destruction Warlock"},
+        {rank=26, classId="MAGE", specIndex=2, score=3323, nameEn="Fire Mage"},
+        {rank=27, classId="DEATHKNIGHT", specIndex=2, score=3217, nameEn="Frost Death Knight"},
+    },
+    healer = {
+        {rank=1, classId="DRUID", specIndex=4, score=3805, nameEn="Restoration Druid"},
+        {rank=2, classId="MONK", specIndex=2, score=3793, nameEn="Mistweaver Monk"},
+        {rank=3, classId="SHAMAN", specIndex=3, score=3780, nameEn="Restoration Shaman"},
+        {rank=4, classId="PALADIN", specIndex=1, score=3639, nameEn="Holy Paladin"},
+        {rank=5, classId="PRIEST", specIndex=1, score=3628, nameEn="Discipline Priest"},
+        {rank=6, classId="EVOKER", specIndex=2, score=3559, nameEn="Preservation Evoker"},
+        {rank=7, classId="PRIEST", specIndex=2, score=3455, nameEn="Holy Priest"},
+    },
+    tank = {
+        {rank=1, classId="MONK", specIndex=1, score=3844, nameEn="Brewmaster Monk"},
+        {rank=2, classId="DRUID", specIndex=3, score=3645, nameEn="Guardian Druid"},
+        {rank=3, classId="DEATHKNIGHT", specIndex=1, score=3625, nameEn="Blood Death Knight"},
+        {rank=4, classId="WARRIOR", specIndex=3, score=3623, nameEn="Protection Warrior"},
+        {rank=5, classId="PALADIN", specIndex=2, score=3567, nameEn="Protection Paladin"},
+        {rank=6, classId="DEMONHUNTER", specIndex=2, score=3558, nameEn="Vengeance Demon Hunter"},
+    },
+}
