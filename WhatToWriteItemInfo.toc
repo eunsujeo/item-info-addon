@@ -3,7 +3,7 @@
 ## Notes: 현재 스펙 상위 50명 장비 목록 패널 (마우스 오버 아이템 비교 지원)
 ## Author: WhatToWrite is Legendary
 ## IconTexture: 136201
-## Version: 1.2.0
+## Version: 1.2.1
 ## SavedVariables: ItemInfoDB
 
 bis_data.lua

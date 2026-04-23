@@ -100,6 +100,7 @@ local panel = nil
 local rows  = {}
 local activeTab = "bis"
 local infoLines = {}  -- 정보 탭용 텍스트 라인
+local metaCollapsed = {dps=true, healer=true, tank=true}  -- 메타 탭 역할별 접힘 상태
 
 local function GetQualityColor(itemLink)
     if not itemLink then return COLOR.empty end
@@ -440,17 +441,23 @@ local function BuildPanel()
     -- ============================================================
     -- 정보 프레임 (스탯/마부/보석/특성 탭용)
     -- ============================================================
-    f.infoFrame = CreateFrame("Frame", nil, f)
-    f.infoFrame:SetPoint("TOPLEFT", f, "TOPLEFT", 0, -HEADER_HEIGHT)
-    f.infoFrame:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", 0, FOOTER_HEIGHT)
-    f.infoFrame:Hide()
+    -- 스크롤 프레임 (정보 탭용)
+    f.infoScroll = CreateFrame("ScrollFrame", nil, f, "UIPanelScrollFrameTemplate")
+    f.infoScroll:SetPoint("TOPLEFT", f, "TOPLEFT", 4, -HEADER_HEIGHT)
+    f.infoScroll:SetPoint("BOTTOMRIGHT", f, "BOTTOMRIGHT", -26, FOOTER_HEIGHT)
+    f.infoScroll:Hide()
 
-    -- 정보 행 (최대 20줄, 아이콘 + 라벨 + 텍스트 + 툴팁)
+    -- 스크롤 내용물 프레임
+    f.infoFrame = CreateFrame("Frame", nil, f.infoScroll)
+    f.infoFrame:SetSize(PANEL_WIDTH - 30, 60 * ROW_HEIGHT + 16)
+    f.infoScroll:SetScrollChild(f.infoFrame)
+
+    -- 정보 행 (최대 60줄, 아이콘 + 라벨 + 텍스트 + 툴팁)
     infoLines = {}
-    for i = 1, 20 do
+    for i = 1, 60 do
         local row = CreateFrame("Frame", nil, f.infoFrame)
-        row:SetSize(PANEL_WIDTH - 16, ROW_HEIGHT)
-        row:SetPoint("TOPLEFT", f.infoFrame, "TOPLEFT", 8, -((i - 1) * ROW_HEIGHT) - 8)
+        row:SetSize(PANEL_WIDTH - 32, ROW_HEIGHT)
+        row:SetPoint("TOPLEFT", f.infoFrame, "TOPLEFT", 4, -((i - 1) * ROW_HEIGHT) - 8)
         row:EnableMouse(true)
 
         local hl = row:CreateTexture(nil, "BACKGROUND")
@@ -495,6 +502,12 @@ local function BuildPanel()
         row.itemId = nil
         row.tooltipData = nil  -- {name, count, slot} 커스텀 툴팁용
         row:SetScript("OnMouseUp", function(self)
+            -- 메타 탭 역할 헤더 클릭 → 접기/펴기 토글
+            if self.metaRole and metaCollapsed ~= nil then
+                metaCollapsed[self.metaRole] = not metaCollapsed[self.metaRole]
+                ItemInfoPanel.Refresh()
+                return
+            end
             if IsModifiedClick("CHATLINK") and self.itemId and self.itemId > 0 then
                 -- 보너스 ID 포함 링크 생성
                 local link = "item:" .. self.itemId .. "::::::::::::2:12806:13335"
@@ -579,9 +592,11 @@ local function BuildPanel()
     end
 
     -- 특성 복사 버튼 (특성 탭 전용, 정보 프레임 하단)
-    local talentCopyBtn = CreateFrame("Button", nil, f.infoFrame, "BackdropTemplate")
+    local talentCopyBtn = CreateFrame("Button", nil, f, "BackdropTemplate")
     talentCopyBtn:SetSize(PANEL_WIDTH - PADDING * 4, 24)
-    talentCopyBtn:SetPoint("BOTTOM", f.infoFrame, "BOTTOM", 0, 8)
+    talentCopyBtn:SetPoint("BOTTOM", f, "BOTTOM", 0, FOOTER_HEIGHT + 4)
+    talentCopyBtn:SetFrameStrata("DIALOG")
+    talentCopyBtn:SetFrameLevel(f:GetFrameLevel() + 10)
     talentCopyBtn:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",
         edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
@@ -699,6 +714,7 @@ local function ClearInfoLines()
         row.slotLabel:Show()
         row.text:Show()
         row.itemId = nil
+        row.metaRole = nil
         row.highlight:Hide()
         row:Hide()
     end
@@ -910,7 +926,7 @@ local function RefreshMetaTab()
     ClearInfoLines()
     local line = 1
 
-    SetInfoLine(line, "|cffffd700쐐기 메타 순위|r (DPS / 힐러 / 탱커)", 1, 0.84, 0)
+    SetInfoLine(line, "|cffffd700쐐기 메타 순위|r", 1, 0.84, 0)
     line = line + 1
 
     if not ItemInfoMetaData then
@@ -918,23 +934,41 @@ local function RefreshMetaTab()
         return
     end
 
-    local ROLE_LABELS = {dps="DPS", healer="힐러", tank="탱커"}
+    local ROLE_LABELS = {dps="딜러", healer="힐러", tank="탱커"}
     for _, role in ipairs({"dps", "healer", "tank"}) do
         local rankings = ItemInfoMetaData[role] or {}
         if #rankings > 0 and line <= #infoLines then
-            SetInfoLine(line, "|cff00aaff▼ " .. ROLE_LABELS[role] .. "|r", 0, 0.67, 1)
+            local arrow = metaCollapsed[role] and "▶" or "▼"
+            local headerText = string.format("|cff00aaff%s %s|r |cff888888(%d)|r",
+                arrow, ROLE_LABELS[role], #rankings)
+            local row = infoLines[line]
+            row.fullText:Hide()
+            row.slotLabel:Hide()
+            row.text:Hide()
+            row.icon:Hide()
+            row.highlight:Hide()
+            row.fullText:Show()
+            row.fullText:SetText(headerText)
+            row.fullText:SetTextColor(0, 0.67, 1, 1)
+            row.itemId = nil
+            row.tooltipData = nil
+            row.metaRole = role  -- 클릭 시 토글용
+            row:Show()
             line = line + 1
-            for _, r in ipairs(rankings) do
-                if line > #infoLines then break end
-                local color = CLASS_COLOR[r.classId] or {r=1,g=1,b=1}
-                local hex = string.format("|cff%02x%02x%02x", color.r*255, color.g*255, color.b*255)
-                local specNames = ItemInfoBIS.SPEC_NAMES[r.classId] or {}
-                local className = ItemInfoBIS.GetClassName(r.classId) or r.classId
-                local specName = specNames[r.specIndex] or "?"
-                local text = string.format("  %d. %s%s %s|r  |cff888888%d|r",
-                    r.rank, hex, specName, className, r.score)
-                SetInfoLine(line, text)
-                line = line + 1
+
+            if not metaCollapsed[role] then
+                for _, r in ipairs(rankings) do
+                    if line > #infoLines then break end
+                    local color = CLASS_COLOR[r.classId] or {r=1,g=1,b=1}
+                    local hex = string.format("|cff%02x%02x%02x", color.r*255, color.g*255, color.b*255)
+                    local specNames = ItemInfoBIS.SPEC_NAMES[r.classId] or {}
+                    local className = ItemInfoBIS.GetClassName(r.classId) or r.classId
+                    local specName = specNames[r.specIndex] or "?"
+                    local text = string.format("  %d. %s%s %s|r  |cff888888%d|r",
+                        r.rank, hex, specName, className, r.score)
+                    SetInfoLine(line, text)
+                    line = line + 1
+                end
             end
         end
     end
@@ -1021,7 +1055,7 @@ function ItemInfoPanel.Refresh()
 
     if isGearTab then
         panel.gearFrame:Show()
-        panel.infoFrame:Hide()
+        panel.infoScroll:Hide()
 
         for _, slotId in ipairs(ItemInfoBIS.SLOT_ORDER) do
             UpdateRow(slotId)
@@ -1042,7 +1076,8 @@ function ItemInfoPanel.Refresh()
         panel.metaText:SetText(ctLabel .. " | " .. ItemInfoBIS.GetUpdateDate())
     else
         panel.gearFrame:Hide()
-        panel.infoFrame:Show()
+        panel.infoScroll:Show()
+        panel.infoScroll:SetVerticalScroll(0)
 
         if activeTab == "stats" then
             RefreshStatsTab()
