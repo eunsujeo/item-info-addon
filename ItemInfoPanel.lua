@@ -197,7 +197,7 @@ local function ShowTalentCopyPopup(talentString, playerName)
     end
 
     local cf = ItemInfoTalentCopyFrame
-    cf.title:SetText("Ctrl+C (" .. (playerName or "") .. ")")
+    cf.title:SetText("Ctrl+C로 복사하세요")
     cf.editBox:SetText(talentString)
     cf:Show()
     cf.editBox:HighlightText()
@@ -994,11 +994,8 @@ local function RefreshTalentsTab()
     end
 
     local entry = cd[vs]
-    local playerName = entry[2] or ""
     local talentStr = entry[1] or ""
 
-    SetInfoLine(line, "  |cffaaaaaa플레이어:|r |cffffffff" .. playerName .. "|r")
-    line = line + 1
     SetInfoLine(line, " ")
     line = line + 1
 
