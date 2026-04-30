@@ -161,31 +161,38 @@ function ItemInfoBIS.GetSlotStatus(slotId)
     return (equippedId == bisItemId) and "bis" or "upgrade"
 end
 
---- 슬롯의 BIS 아이템 ID 반환
-function ItemInfoBIS.GetSlotBISItemId(slotId)
+--- 활성 entry 반환 (useAlt이면 alt, 없으면 primary)
+local function GetEntry(slotId, useAlt)
     local entry = activeBIS[slotId]
     if not entry then return nil end
-    return entry[1]
+    if useAlt and entry.alt then
+        return entry.alt
+    end
+    return entry
+end
+
+--- 슬롯의 BIS 아이템 ID 반환
+function ItemInfoBIS.GetSlotBISItemId(slotId, useAlt)
+    local entry = GetEntry(slotId, useAlt)
+    return entry and entry[1] or nil
 end
 
 --- 슬롯의 BIS 아이템 이름 반환 (캐시 없으면 nil)
-function ItemInfoBIS.GetSlotBISItemName(slotId)
-    local itemId = ItemInfoBIS.GetSlotBISItemId(slotId)
+function ItemInfoBIS.GetSlotBISItemName(slotId, useAlt)
+    local itemId = ItemInfoBIS.GetSlotBISItemId(slotId, useAlt)
     if not itemId then return nil end
-    local name = GetItemInfo(itemId)
-    return name
+    return (GetItemInfo(itemId))
 end
 
 --- 슬롯의 BIS 아이템 하이퍼링크 생성 (툴팁용, 보너스 ID 포함)
-function ItemInfoBIS.GetSlotBISItemLink(slotId)
-    local entry = activeBIS[slotId]
+function ItemInfoBIS.GetSlotBISItemLink(slotId, useAlt)
+    local entry = GetEntry(slotId, useAlt)
     if not entry then return nil end
     local itemId = entry[1]
     local bonusIds = entry[2]
     if not bonusIds or #bonusIds == 0 then
         return "item:" .. itemId
     end
-    -- item:ID:enchant:gem1:gem2:gem3:gem4:suffix:unique:level:spec:upgradeType:instanceDifficulty:numBonuses:b1:b2:...
     local parts = {"item", itemId, "", "", "", "", "", "", "", "", "", "", ""}
     parts[#parts + 1] = #bonusIds
     for _, b in ipairs(bonusIds) do
@@ -195,10 +202,15 @@ function ItemInfoBIS.GetSlotBISItemLink(slotId)
 end
 
 --- 슬롯의 BIS 아이템 획득처 반환
-function ItemInfoBIS.GetSlotBISSource(slotId)
+function ItemInfoBIS.GetSlotBISSource(slotId, useAlt)
+    local entry = GetEntry(slotId, useAlt)
+    return entry and entry[3] or nil
+end
+
+--- 슬롯에 2순위(alt)가 있는지 확인
+function ItemInfoBIS.HasAlt(slotId)
     local entry = activeBIS[slotId]
-    if not entry then return nil end
-    return entry[3]
+    return entry and entry.alt ~= nil
 end
 
 --- 현재 장착 아이템 이름 반환

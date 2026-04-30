@@ -190,7 +190,9 @@ def fetch_spec_page(class_slug: str, spec_slug: str, content_type: str = "m+"):
 
 
 def parse_gear(soup) -> dict:
-    """soup에서 gear 섹션을 파싱합니다."""
+    """soup에서 gear 섹션을 파싱합니다.
+    Returns: {slot_id: {"primary": itemId, "alt": itemId_or_None}}
+    """
     gear_section = soup.find("section", id="gear")
     if not gear_section:
         return {}
@@ -217,20 +219,26 @@ def parse_gear(soup) -> dict:
         if not links:
             continue
 
+        def get_item_id(link):
+            m = re.search(r"item=(\d+)", link["href"])
+            return int(m.group(1)) if m else None
+
         if slot_name.lower() in ("ring", "rings", "trinket", "trinkets"):
+            # 반지/장신구: 1순위=slot_id, 2순위=slot_id+1 (11/12, 13/14)
             for i, link in enumerate(links[:2]):
-                match = re.search(r"item=(\d+)", link["href"])
-                if match:
-                    item_id = int(match.group(1))
+                item_id = get_item_id(link)
+                if item_id:
                     sid = slot_id + i
                     if sid not in slots:
-                        slots[sid] = item_id
+                        slots[sid] = {"primary": item_id, "alt": None}
         else:
-            match = re.search(r"item=(\d+)", links[0]["href"])
-            if match:
-                item_id = int(match.group(1))
-                if slot_id not in slots:
-                    slots[slot_id] = item_id
+            item_id = get_item_id(links[0])
+            if item_id and slot_id not in slots:
+                alt_id = get_item_id(links[1]) if len(links) > 1 else None
+                # 1순위와 같으면 alt 무시
+                if alt_id == item_id:
+                    alt_id = None
+                slots[slot_id] = {"primary": item_id, "alt": alt_id}
 
     return slots
 
@@ -572,7 +580,7 @@ def parse_existing_mplus_data(lua_path: Path) -> dict:
             for slot_match in slot_pattern.finditer(slot_block):
                 slot_id = int(slot_match.group(1))
                 item_id = int(slot_match.group(2))
-                slot_data[slot_id] = item_id
+                slot_data[slot_id] = {"primary": item_id, "alt": None}
 
             if slot_data:
                 specs[spec_index] = slot_data
@@ -784,8 +792,21 @@ def generate_lua(mplus_data: dict, raid_data: dict, output_path: Path):
             slot_order = [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
             for slot_id in slot_order:
                 if slot_id in slot_data:
-                    item_id = slot_data[slot_id]
-                    lines.append(f'                [{slot_id}]={{{item_id}, {{12806, 13335}}, ""}},')
+                    entry = slot_data[slot_id]
+                    if isinstance(entry, dict):
+                        primary = entry["primary"]
+                        alt = entry.get("alt")
+                    else:
+                        # 이전 형식 호환
+                        primary = entry
+                        alt = None
+                    if alt:
+                        lines.append(
+                            f'                [{slot_id}]={{{primary}, {{12806, 13335}}, "", '
+                            f'alt={{{alt}, {{12806, 13335}}, ""}}}},'
+                        )
+                    else:
+                        lines.append(f'                [{slot_id}]={{{primary}, {{12806, 13335}}, ""}},')
             lines.append("            },")
 
         lines.append("        },")

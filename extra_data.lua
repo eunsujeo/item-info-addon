@@ -1,6 +1,6 @@
 -- extra_data.lua
 -- 스탯 / 마법부여 / 보석 (archon.gg 기준)
--- 업데이트: 2026-04-23
+-- 업데이트: 2026-04-30
 
 ItemInfoExtraData = {}
 
@@ -25,7 +25,7 @@ ItemInfoExtraData["DEATHKNIGHT"] = {
         },
     },
     [2] = { -- 냉기
-        stats = {"치명타", "특화", "가속", "유연성"},
+        stats = {"특화", "치명타", "가속", "유연성"},
         embellishments = {
             {name="비전매듭 안감", id=240167},
             {name="다크문 인장: 사냥", id=245876},
@@ -96,7 +96,7 @@ ItemInfoExtraData["DEMONHUNTER"] = {
             {slot="어깨", name="Silvermoon's Mending", id=244021},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
-            {slot="발", name="Lynx's Dexterity", id=243953},
+            {slot="발", name="Shaladrassil's Roots", id=243983},
             {slot="반지", name="Silvermoon's Alacrity", id=244015},
             {slot="무기", name="Acuity of the Ren'dorei", id=244029},
         },
@@ -445,8 +445,8 @@ ItemInfoExtraData["MONK"] = {
     [3] = { -- 풍운
         stats = {"가속", "치명타", "특화", "유연성"},
         embellishments = {
-            {name="다크문 인장: 사냥", id=245875},
             {name="로아 신봉자의 고리", id=251513},
+            {name="안정화 보석 사선 주머니", id=251490},
         },
         enchantments = {
             {slot="머리", name="Empowered Rune of Avoidance", id=244007},
@@ -512,11 +512,11 @@ ItemInfoExtraData["PALADIN"] = {
             {name="로아 신봉자의 고리", id=251513},
         },
         enchantments = {
-            {slot="머리", name="Empowered Blessing of Speed", id=243981},
-            {slot="어깨", name="Akil'zon's Swiftness", id=243963},
+            {slot="머리", name="Empowered Rune of Avoidance", id=244007},
+            {slot="어깨", name="Amirdrassil's Grace", id=243991},
             {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Forest Hunter's Armor Kit", id=244641},
-            {slot="발", name="Farstrider's Hunt", id=244009},
+            {slot="발", name="Lynx's Dexterity", id=243953},
             {slot="반지", name="Eyes of the Eagle", id=243957},
             {slot="무기", name="Acuity of the Ren'dorei", id=244029},
         },
@@ -557,7 +557,7 @@ ItemInfoExtraData["PRIEST"] = {
         enchantments = {
             {slot="머리", name="Empowered Hex of Leeching", id=243951},
             {slot="어깨", name="Silvermoon's Mending", id=244021},
-            {slot="가슴", name="Mark of the Magister", id=244003},
+            {slot="가슴", name="Mark of the Worldsoul", id=243977},
             {slot="다리", name="Arcanoweave Spellthread", id=240155},
             {slot="발", name="Shaladrassil's Roots", id=243983},
             {slot="반지", name="Nature's Fury", id=243987},
@@ -584,7 +584,7 @@ ItemInfoExtraData["PRIEST"] = {
             {slot="무기", name="Arcane Mastery", id=244031},
         },
         gems = {
-            {name="Flawless Masterful Peridot", id=240892},
+            {name="Flawless Quick Amethyst", id=240900},
             {name="Indecipherable Eversong Diamond", id=240983},
         },
     },
@@ -645,7 +645,6 @@ ItemInfoExtraData["ROGUE"] = {
             {slot="발", name="Lynx's Dexterity", id=243953},
             {slot="반지", name="Eyes of the Eagle", id=243957},
             {slot="무기", name="Acuity of the Ren'dorei", id=244029},
-            {slot="무기", name="Arcane Mastery", id=244031},
         },
         gems = {
             {name="Flawless Quick Amethyst", id=240900},

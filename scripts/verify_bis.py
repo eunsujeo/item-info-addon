@@ -106,18 +106,27 @@ def parse_section_data(content: str, section_name: str) -> dict:
         class_block = section_block[block_start + 1:block_end]
 
         specs = {}
-        spec_pattern = re.compile(
-            r'\[(\d+)\]\s*=\s*\{[^{]*?((?:\[\d+\]=\{.*?\},?\s*)+)\s*\}',
-            re.DOTALL,
-        )
-
-        for spec_match in spec_pattern.finditer(class_block):
-            spec_index = int(spec_match.group(1))
-            slot_block = spec_match.group(2)
+        # spec 블록 brace counting으로 추출
+        spec_starts = list(re.finditer(r'\[(\d+)\]\s*=\s*\{', class_block))
+        for sm in spec_starts:
+            spec_index = int(sm.group(1))
+            block_start = sm.end() - 1
+            depth = 0
+            block_end = block_start
+            for j in range(block_start, len(class_block)):
+                if class_block[j] == '{':
+                    depth += 1
+                elif class_block[j] == '}':
+                    depth -= 1
+                    if depth == 0:
+                        block_end = j
+                        break
+            slot_block = class_block[block_start + 1:block_end]
 
             slots = {}
+            # primary 패턴 (alt 무시): {itemId, {bonusIds}, "source"
             slot_pattern = re.compile(
-                r'\[(\d+)\]=\{(\d+),\s*\{([^}]*)\},\s*"([^"]*)"\}'
+                r'\[(\d+)\]=\{(\d+),\s*\{([^}]*)\},\s*"([^"]*)"'
             )
 
             for slot_match in slot_pattern.finditer(slot_block):

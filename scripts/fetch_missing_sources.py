@@ -186,7 +186,8 @@ def find_missing_item_ids(bis_path: Path) -> set[int]:
     if raid_pos == -1:
         raid_pos = len(content)
     mplus_section = content[:raid_pos]
-    pattern = re.compile(r'\[\d+\]=\{(\d+),\s*\{[^}]*\},\s*""\}')
+    # primary와 alt 둘 다 매칭: {itemId, {bonusIds}, ""}
+    pattern = re.compile(r'\{(\d+),\s*\{[^}]*\},\s*""[},]')
     return {int(m.group(1)) for m in pattern.finditer(mplus_section)}
 
 

@@ -101,6 +101,7 @@ local rows  = {}
 local activeTab = "bis"
 local infoLines = {}  -- 정보 탭용 텍스트 라인
 local metaCollapsed = {dps=true, healer=true, tank=true}  -- 메타 탭 역할별 접힘 상태
+local slotUseAlt = {}  -- 슬롯별 2순위 토글 상태 [slotId] = true/false
 
 local function GetQualityColor(itemLink)
     if not itemLink then return COLOR.empty end
@@ -366,10 +367,33 @@ local function BuildPanel()
         statusIcon:SetJustifyH("RIGHT")
         row.statusIcon = statusIcon
 
+        -- 2순위 토글 버튼
+        local altBtn = CreateFrame("Button", nil, row)
+        altBtn:SetSize(14, 14)
+        altBtn:SetPoint("RIGHT", statusIcon, "LEFT", -2, 0)
+        local altText = altBtn:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+        altText:SetAllPoints()
+        altText:SetJustifyH("CENTER")
+        altText:SetText("2")
+        altBtn.text = altText
+        altBtn:Hide()
+        altBtn:SetScript("OnClick", function(self)
+            slotUseAlt[slotId] = not slotUseAlt[slotId]
+            ItemInfoPanel.Refresh()
+        end)
+        altBtn:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:AddLine(slotUseAlt[slotId] and "1순위로 전환" or "2순위로 전환")
+            GameTooltip:Show()
+        end)
+        altBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        row.altBtn = altBtn
+
         row:EnableMouse(true)
         row:SetScript("OnMouseUp", function(self)
             if IsModifiedClick("CHATLINK") then
-                local bisLink = ItemInfoBIS.GetSlotBISItemLink(self.slotId)
+                local useAlt = slotUseAlt[self.slotId]
+                local bisLink = ItemInfoBIS.GetSlotBISItemLink(self.slotId, useAlt)
                 if bisLink then
                     local _, itemLink = GetItemInfo(bisLink)
                     if itemLink then
@@ -380,7 +404,8 @@ local function BuildPanel()
         end)
         row:SetScript("OnEnter", function(self)
             self.highlight:Show()
-            local bisLink = ItemInfoBIS.GetSlotBISItemLink(self.slotId)
+            local useAlt = slotUseAlt[self.slotId]
+            local bisLink = ItemInfoBIS.GetSlotBISItemLink(self.slotId, useAlt)
             if bisLink then
                 GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
                 GameTooltip:ClearAllPoints()
@@ -395,7 +420,7 @@ local function BuildPanel()
                 end
                 ItemInfoBIS.panelTooltipActive = true
                 GameTooltip:SetHyperlink(bisLink)
-                local source = ItemInfoBIS.GetSlotBISSource(self.slotId)
+                local source = ItemInfoBIS.GetSlotBISSource(self.slotId, useAlt)
                 if source and source ~= "" then
                     GameTooltip:AddLine(" ")
                     GameTooltip:AddLine("|cffffd700획득처:|r " .. source, 1, 1, 1)
@@ -666,8 +691,23 @@ local function UpdateRow(slotId)
     local row = rows[slotId]
     if not row then return end
 
+    local useAlt = slotUseAlt[slotId]
+    local hasAlt = ItemInfoBIS.HasAlt(slotId)
+
+    -- 2순위 토글 버튼: alt 있을 때만 표시 (M+ 탭에서만)
+    if hasAlt and activeTab == "gear" then
+        row.altBtn:Show()
+        if useAlt then
+            row.altBtn.text:SetText("|cff00ff00❶|r")
+        else
+            row.altBtn.text:SetText("|cff888888❷|r")
+        end
+    else
+        row.altBtn:Hide()
+    end
+
     local status  = ItemInfoBIS.GetSlotStatus(slotId)
-    local itemId  = ItemInfoBIS.GetSlotBISItemId(slotId)
+    local itemId  = ItemInfoBIS.GetSlotBISItemId(slotId, useAlt)
 
     if not itemId then
         row.itemName:SetText("|cff666666-|r")
@@ -676,7 +716,7 @@ local function UpdateRow(slotId)
         return
     end
 
-    local bisLink = ItemInfoBIS.GetSlotBISItemLink(slotId)
+    local bisLink = ItemInfoBIS.GetSlotBISItemLink(slotId, useAlt)
     local bisName, _, _, _, _, _, _, _, _, bisIcon = GetItemInfo(bisLink or itemId)
     if bisIcon then
         row.icon:SetTexture(bisIcon)

@@ -129,8 +129,9 @@ def apply_sources(bis_content: str, sources: dict) -> tuple[str, int, set]:
         print("ERROR: raid 섹션 경계를 찾을 수 없습니다!", file=sys.stderr)
         sys.exit(1)
 
-    # 빈 소스 문자열 패턴 매칭
-    item_pattern = re.compile(r'(\[\d+\]=\{)(\d+)(,\s*\{[^}]*\},\s*)""')
+    # 빈 소스 문자열 패턴: {itemId, {bonusIds}, ""} 또는 {itemId, {bonusIds}, "",
+    # primary와 alt 둘 다 매칭 (라인 전체에서 모든 매칭 교체)
+    item_pattern = re.compile(r'(\{)(\d+)(,\s*\{[^}]*\},\s*)""([\},])')
 
     replaced = 0
     missing_ids = set()
@@ -138,19 +139,19 @@ def apply_sources(bis_content: str, sources: dict) -> tuple[str, int, set]:
     new_lines = []
     for i, line in enumerate(lines):
         if i < raid_line:
-            m = item_pattern.search(line)
-            if m:
+            # 라인 내 모든 매칭 처리
+            new_line = line
+            for m in list(item_pattern.finditer(line)):
                 item_id = int(m.group(2))
                 if item_id in sources:
                     src = sources[item_id]
-                    new_line = line.replace('""', f'"{src}"', 1)
-                    new_lines.append(new_line)
+                    old = m.group(0)
+                    new = f'{m.group(1)}{m.group(2)}{m.group(3)}"{src}"{m.group(4)}'
+                    new_line = new_line.replace(old, new, 1)
                     replaced += 1
                 else:
                     missing_ids.add(item_id)
-                    new_lines.append(line)
-            else:
-                new_lines.append(line)
+            new_lines.append(new_line)
         else:
             new_lines.append(line)
 
