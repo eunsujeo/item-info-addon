@@ -580,7 +580,7 @@ local function BuildPanel()
                 GameTooltip:Show()
             elseif self.tooltipData and self.itemId and self.itemId > 0 then
                 -- 아이템 툴팁 (효과 설명 포함) + 사용 인원수
-                GameTooltip:SetHyperlink("item:" .. self.itemId)
+                GameTooltip:SetHyperlink("item:" .. self.itemId .. "::::::::::::2:12806:13335")
                 ShoppingTooltip1:Hide()
                 ShoppingTooltip2:Hide()
                 if self.tooltipData.count and self.tooltipData.count > 0 then
@@ -598,7 +598,7 @@ local function BuildPanel()
                 end
                 GameTooltip:Show()
             elseif self.itemId and self.itemId > 0 then
-                GameTooltip:SetHyperlink("item:" .. self.itemId)
+                GameTooltip:SetHyperlink("item:" .. self.itemId .. "::::::::::::2:12806:13335")
                 ShoppingTooltip1:Hide()
                 ShoppingTooltip2:Hide()
                 GameTooltip:Show()

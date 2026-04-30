@@ -210,7 +210,21 @@ SOURCE_MAP = {
     "The Botanica": "던전 - 마법학자의 정원",
     "Magister's Terrace": "던전 - 마법학자의 정원",
     "Mycelial Caverns": "던전 - 마이사라 동굴",
+    "Maisara Caverns": "던전 - 마이사라 동굴",
     "Fungal Folly": "던전 - 균류 소동",
+    "Skyreach": "던전 - 하늘매",
+    "Windrunner Spire": "던전 - 바람매 첨탑",
+    "Nexus-Princess Ky'veza's Gambit": "던전 - 연결점 제나스",
+    "Nexus Point Xenas": "던전 - 연결점 제나스",
+    "Nexus-Point Xenas": "던전 - 연결점 제나스",
+    # 보스 (잘못 영문으로 들어간 케이스)
+    "Imperator Averzian": "레이드 - 전제군주 아베르지안",
+    "Salhadaar": "레이드 - 몰락한 왕 살라다르",
+    "Fallen-King Salhadaar": "레이드 - 몰락한 왕 살라다르",
+    "Imperatrix Mecha": "레이드 - 임페라트릭스 메카",
+    # Tier Set 등 그룹 표시
+    "Tier Set": "Tier Set",
+    "Fallen-King Salhadaar(Tier Set)": "레이드 - 몰락한 왕 살라다르",
     # 기타
     "Catalyst": "행렬 촉매",
     "Revival Catalyst": "행렬 촉매",
